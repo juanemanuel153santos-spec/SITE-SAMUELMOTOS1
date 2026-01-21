@@ -1,0 +1,2497 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAMUEL MOTOS - Peças para Motos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========== RESET E VARIÁVEIS ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Arial', sans-serif;
+        }
+
+        body {
+            background: #F6F7F9;
+            color: #0A0A13;
+            line-height: 1.6;
+        }
+
+        /* ========== CORES E CONSTANTES ========== */
+        :root {
+            --cor-primaria: #1A0F7A;      /* Header e áreas principais */
+            --cor-secundaria: #2415A6;    /* Hover e destaques sutis */
+            --cor-texto: #0A0A13;
+            --cor-bg: #F6F7F9;
+            --cor-sombra: rgba(134, 128, 140, 0.25);
+            --cor-erro: #C1121F;          /* Destaque / títulos de seção */
+            --cor-whatsapp: #25d366;
+            --raio-borda: 8px;
+            --transicao: 0.3s ease;
+        }
+
+        /* ========== HEADER ========== */
+        /* ========== HEADER AVANÇADO ========== */
+        header {
+            width: 100%;
+            background: #1A0F7A;
+            color: #D3D7E1;
+            padding: 10px 16px;
+            display: grid;
+            grid-template-columns: auto auto 1fr;
+            grid-template-areas:
+                "logo departamentos busca"
+                "links links links";
+            gap: 8px 14px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px var(--cor-sombra);
+        }
+
+        .logo {
+            grid-area: logo;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo img {
+            height: 32px;
+            width: 32px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .logo span {
+              color: var(--cor-erro);
+        }
+
+        .departamentos {
+            grid-area: departamentos;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        #btnDepartamentos {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #141924;
+            color: #D3D7E1;
+            border: 1px solid #1E1E1E;
+            padding: 10px 14px;
+            border-radius: var(--raio-borda);
+            cursor: pointer;
+            font-weight: 700;
+            transition: background var(--transicao), color var(--transicao);
+        }
+
+        #btnDepartamentos:hover {
+            background: var(--cor-secundaria);
+            color: #D3D7E1;
+        }
+
+        #dropdownDepartamentos {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            background: #141924;
+            border: 1px solid #1E1E1E;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(134, 128, 140, 0.35);
+            padding: 12px;
+            display: none;
+            min-width: 240px;
+            z-index: 1200;
+        }
+
+        #dropdownDepartamentos a {
+            display: block;
+            color: #D3D7E1;
+            padding: 8px 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background var(--transicao), color var(--transicao);
+        }
+
+        #dropdownDepartamentos a:hover {
+            background: #1A0F7A;
+            color: #F6F7F9;
+        }
+
+        .busca {
+            grid-area: busca;
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        #campoBusca {
+            width: 100%;
+            padding: 12px 44px 12px 14px;
+            border: 1px solid #86808C;
+            border-radius: 999px;
+            background: #ECEEF2;
+            color: #0A0A13;
+            font-size: 15px;
+            outline: none;
+            transition: box-shadow var(--transicao), border var(--transicao);
+        }
+
+        #campoBusca:focus {
+            border: 1px solid var(--cor-primaria);
+            box-shadow: 0 0 0 3px rgba(26, 15, 122, 0.15);
+        }
+
+        .icone-busca {
+            position: absolute;
+            right: 14px;
+            color: #B1A6B3;
+            font-size: 18px;
+            pointer-events: none;
+        }
+
+        #resultadoBusca {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            right: 0;
+            background: #141924;
+            border: 1px solid #1E1E1E;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(134, 128, 140, 0.35);
+            display: none;
+            max-height: 320px;
+            overflow-y: auto;
+            z-index: 1200;
+        }
+
+        #resultadoBusca .item-resultado {
+            padding: 10px 12px;
+            color: #D3D7E1;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            transition: background var(--transicao), color var(--transicao);
+        }
+
+        #resultadoBusca .item-resultado:hover {
+            background: #1A0F7A;
+            color: #F6F7F9;
+        }
+
+        nav {
+
+            nav a {
+                color: #D3D7E1;
+                text-decoration: none;
+                font-weight: 600;
+                transition: color var(--transicao);
+            }
+
+            nav a:hover {
+                color: var(--cor-secundaria);
+            }
+        }
+
+        nav a {
+            color: #D3D7E1;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color var(--transicao);
+            padding: 0 8px;
+        }
+
+        nav a:hover {
+            color: var(--cor-secundaria);
+        }
+
+        .produto.produto-destaque {
+            outline: 2px solid var(--cor-secundaria);
+            box-shadow: 0 0 0 4px rgba(255, 187, 0, 0.25);
+            transition: outline var(--transicao), box-shadow var(--transicao);
+        }
+
+        /* ========== HERO SECTION ========== */
+        .hero {
+            margin-top: 140px;
+            width: 100%;
+            height: 520px;
+            background:
+                linear-gradient(135deg, rgba(26, 15, 122, 0.72) 0%, rgba(10, 10, 19, 0.9) 100%),
+                url('fotonova.jpg');
+            background-position: center top;
+            background-size: cover, contain;
+            background-repeat: no-repeat, no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #D3D7E1;
+        }
+
+        .hero h2 {
+            font-size: 42px;
+            font-weight: 700;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+        }
+
+        /* ========== SEÇÕES ========== */
+        .section {
+            padding: 50px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .titulo {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--cor-erro);
+            padding-left: 15px;
+            color: var(--cor-erro);
+        }
+
+        /* ========== GRID DE PRODUTOS ========== */
+        .produtos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 24px;
+            width: 100%;
+        }
+
+        /* ========== CARD DO PRODUTO ========== */
+        .produto {
+            background: #FFFFFF;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 12px var(--cor-sombra);
+            transition: all var(--transicao);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .produto:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .produto img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+
+        .produto h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--cor-texto);
+            line-height: 1.4;
+            flex-grow: 1;
+        }
+
+        .produto p {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--cor-primaria);
+            margin-bottom: 12px;
+        }
+
+        .produto button {
+            background: #0A0A13;
+            color: #D3D7E1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: var(--raio-borda);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all var(--transicao);
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .produto button:hover {
+            background: var(--cor-secundaria);
+            color: #F6F7F9;
+            transform: scale(1.02);
+        }
+
+        /* ========== ANIMAÇÕES ========== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== CARRINHO ========== */
+        #iconeCarrinho {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #0A0A13;
+            color: #D3D7E1;
+            padding: 12px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 2000;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(134, 128, 140, 0.35);
+            transition: all var(--transicao);
+        }
+
+        /* ========== ADMIN PAINEL (FRONT-END) ========== */
+        #adminOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 3500;
+            padding: 16px;
+        }
+
+        #adminModal {
+            background: #0A0A13;
+            color: #D3D7E1;
+            width: min(1100px, 96vw);
+            max-height: 90vh;
+            border-radius: 14px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .admin-header {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #141924;
+            border-bottom: 1px solid #1E1E1E;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            padding: 14px 20px;
+            background: #0A0A13;
+        }
+
+        .admin-card {
+            background: #141924;
+            border: 1px solid #1E1E1E;
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .admin-body {
+            padding: 16px 20px 20px;
+            overflow: auto;
+            display: grid;
+            gap: 16px;
+        }
+
+        .admin-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            background: #141924;
+            border: 1px solid #1E1E1E;
+            border-radius: 10px;
+            padding: 14px;
+        }
+
+        .admin-form label {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-weight: 600;
+            color: #D3D7E1;
+        }
+
+        .admin-form input,
+        .admin-form select {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #1E1E1E;
+            background: #0A0A13;
+            color: #D3D7E1;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .admin-actions button {
+            padding: 10px 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .btn-primario {
+            background: #1A0F7A;
+            color: #D3D7E1;
+        }
+
+        .btn-primario:hover {
+            background: #2415A6;
+        }
+
+        .btn-secundario {
+            background: #1E1E1E;
+            color: #D3D7E1;
+        }
+
+        .btn-secundario:hover {
+            background: #2415A6;
+        }
+
+        table.admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #141924;
+            border: 1px solid #1E1E1E;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        table.admin-table th,
+        table.admin-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #1E1E1E;
+            color: #D3D7E1;
+            font-size: 14px;
+        }
+
+        table.admin-table th {
+            background: #0A0A13;
+            font-weight: 700;
+        }
+
+        .admin-login {
+            padding: 16px 20px;
+            background: #0A0A13;
+            border-top: 1px solid #1E1E1E;
+            display: none;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .admin-login input {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #1E1E1E;
+            background: #141924;
+            color: #D3D7E1;
+        }
+
+        #iconeCarrinho:hover {
+            background: var(--cor-secundaria);
+            color: #F6F7F9;
+            transform: scale(1.1);
+        }
+
+        #janelaCarrinho {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            width: 320px;
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 3000;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        #janelaCarrinho h3 {
+            margin-bottom: 15px;
+            color: var(--cor-primaria);
+            font-size: 18px;
+        }
+
+        #janelaCarrinho ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #janelaCarrinho li {
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+        }
+
+        #janelaCarrinho li:last-child {
+            border-bottom: none;
+        }
+
+        .btnQtd {
+            padding: 4px 8px;
+            background: var(--cor-primaria);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: background var(--transicao);
+        }
+
+        .btnQtd:hover {
+            background: var(--cor-secundaria);
+            color: var(--cor-texto);
+        }
+
+        .btnRemover {
+            background: var(--cor-erro);
+            color: #fff;
+            padding: 2px 6px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: background var(--transicao);
+        }
+
+        .btnRemover:hover {
+            background: #8b0000;
+        }
+
+        #janelaCarrinho button[style*="width"] {
+            background: var(--cor-primaria);
+            color: #fff;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: var(--raio-borda);
+            margin-top: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background var(--transicao);
+        }
+
+        #janelaCarrinho button[style*="width"]:hover {
+            background: var(--cor-secundaria);
+            color: var(--cor-texto);
+        }
+
+        /* ========== MODAL ========== */
+        #modalProduto {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 5000;
+            padding: 20px;
+        }
+
+        #modalProduto .conteudo {
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #modalProduto img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 16px;
+        }
+
+        #modalProduto h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--cor-primaria);
+        }
+
+        #modalProduto p {
+            margin: 10px 0;
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        #modalProduto #modalPreco {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--cor-secundaria);
+            margin: 12px 0;
+        }
+
+        #modalProduto #modalDescricao {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            max-height: 150px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .btnCarrinho {
+            background: var(--cor-texto);
+            color: #fff;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: var(--raio-borda);
+            margin-top: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all var(--transicao);
+            font-size: 14px;
+        }
+
+        .btnCarrinho:hover {
+            background: var(--cor-primaria);
+            transform: scale(1.02);
+        }
+
+        .btnFechar {
+            background: var(--cor-erro);
+            color: #fff;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: var(--raio-borda);
+            margin-top: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background var(--transicao);
+            font-size: 14px;
+        }
+
+        .btnFechar:hover {
+            background: #8b0000;
+        }
+
+        /* ========== WHATSAPP FLUTUANTE ========== */
+        #whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--cor-whatsapp);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all var(--transicao);
+            text-decoration: none;
+        }
+
+        #whatsapp:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+        }
+
+        #whatsapp img {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            margin-top: 60px;
+            background: var(--cor-texto);
+            color: #fff;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        footer p {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+
+        /* ========== RESPONSIVIDADE ========== */
+        @media (max-width: 768px) {
+            header {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "logo"
+                    "busca"
+                    "departamentos"
+                    "links";
+            }
+
+            nav {
+                justify-content: flex-start;
+                gap: 10px;
+            }
+
+            nav a {
+                font-size: 13px;
+            }
+
+            .departamentos {
+                width: 100%;
+            }
+
+            #btnDepartamentos {
+                width: 100%;
+                justify-content: center;
+            }
+
+            #dropdownDepartamentos {
+                width: 100%;
+            }
+
+            .busca {
+                width: 100%;
+            }
+
+            .hero h2 {
+                font-size: 28px;
+            }
+
+            .section {
+                padding: 30px 15px;
+            }
+
+            .produtos {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 16px;
+            }
+
+            #janelaCarrinho {
+                width: 90vw;
+                right: 5vw;
+                left: auto;
+            }
+
+            #iconeCarrinho {
+                bottom: auto;
+                font-size: 18px;
+                padding: 10px 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 18px;
+            }
+
+            nav {
+                gap: 6px;
+            }
+
+            nav a {
+                font-size: 11px;
+            }
+
+            .hero {
+                height: 200px;
+                margin-top: 160px;
+            }
+
+            .hero h2 {
+                font-size: 20px;
+            }
+
+            .produtos {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 12px;
+            }
+
+            .produto {
+                padding: 12px;
+            }
+
+            .produto img {
+                height: 120px;
+            }
+
+            .titulo {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ========== HEADER ========== -->
+    <header>
+        <div class="logo">
+            <img src="315323053_929172618059320_6208782969635345415_n.jpg" alt="Samuel Motos" />
+            SAMUEL<span>MOTOS</span>
+        </div>
+
+        <div class="departamentos">
+            <button id="btnDepartamentos">☰ Departamentos</button>
+            <div id="dropdownDepartamentos">
+                <a href="#pneus">Pneus</a>
+                <a href="#oleos">Óleos</a>
+                <a href="#embreagem">Embreagem</a>
+                <a href="#carburador">Carburador</a>
+                <a href="#iluminacao">Iluminação</a>
+                <a href="#paralamas">Paralamas</a>
+                <a href="#complementos">Complementos Transmissão</a>
+                <a href="#transmissao">Kits Transmissão</a>
+                <a href="#buchas">Buchas / Coxins</a>
+                <a href="#cabos">Cabos Acelerador</a>
+                <a href="#cabos-velocimetro">Cabos Velocímetro</a>
+                <a href="#motor-partida">Motor de Partida</a>
+                <a href="#velas">Velas</a>
+            </div>
+        </div>
+
+        <div class="busca">
+            <input id="campoBusca" type="text" placeholder="O que você procura?" autocomplete="off" />
+            <span class="icone-busca">🔍</span>
+            <div id="resultadoBusca"></div>
+        </div>
+
+        <nav>
+            <a href="#home">Início</a>
+            <a href="#pneus">Pneus</a>
+            <a href="#oleos">Óleos</a>
+            <a href="#embreagem">Embreagem</a>
+            <a href="#carburador">Carburador</a>
+            <a href="#iluminacao">Iluminação</a>
+            <a href="#paralamas">Paralamas</a>
+            <a href="#complementos">Comp. Transmissão</a>
+            <a href="#transmissao">Kits Transmissão</a>
+            <a href="#cabos">Cabos</a>
+            <a href="#motor-partida">Motor Partida</a>
+            <a href="#velas">Velas</a>
+        </nav>
+    </header>
+
+    <!-- ========== ÍCONE DO CARRINHO ========== -->
+    <div id="iconeCarrinho" onclick="abrirCarrinho()">
+        🛒 <span id="contadorCarrinho">0</span>
+    </div>
+
+    <!-- ========== JANELA DO CARRINHO ========== -->
+    <div id="janelaCarrinho">
+        <h3>Seu Carrinho</h3>
+        <ul id="listaCarrinho"></ul>
+        <button onclick="fecharCarrinho()">Fechar</button>
+    </div>
+
+    <!-- ========== HERO SECTION ========== -->
+    <section class="hero" id="home">
+        <h2>A SUA LOJA DE PEÇAS!</h2>
+    </section>
+
+    <!-- ========== SEÇÃO PNEUS ========== -->
+    <section class="section" id="pneus">
+        <h2 class="titulo">PNEUS</h2>
+        <div class="produtos">
+            <div class="produto" data-descricao="Excelente Acabamento; Alta durabilidade e vida útil; Encaixe Perfeito.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_685715-MLB79807861220_102024-F.webp" alt="Pastilha de Freio" />
+                <h3>Pastilha de Freio Dianteira CG 150 TITAN</h3>
+                <p>R$ 45,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+
+            <div class="produto" data-descricao="Tamanho: 120/80-18 | Tipo: Com câmara | Posição: Traseira | Índice de velocidade: S">
+                <img src="https://www.bartofil.com.br/media/catalog/product/1/1/117085_a.jpg" alt="Pneu 90/90-18" />
+                <h3>Pneu 90/90-18 R34</h3>
+                <p>R$ 230,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+
+            <div class="produto" data-descricao="Tamanho: 90/90-18 | Sem câmara | Posição: Traseira | Índice de velocidade: P">
+                <img src="https://tse2.mm.bing.net/th/id/OIP.UKVM7vWXFo9TaG7m8G8X2wAAAA" alt="Pneu Levorin Matrix" />
+                <h3>Pneu Levorin Matrix 90/90-18</h3>
+                <p>R$ 280,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+
+            <div class="produto" data-descricao="Tamanho: 80/100-18 | Com câmara | Posição: Dianteira | Índice de velocidade: P">
+                <img src="https://tse2.mm.bing.net/th/id/OIP.D3kk3FBiDSf1fZ4YFWhilgHaHa" alt="Pneu Levorin" />
+                <h3>Pneu Levorin Matrix 80/100-18</h3>
+                <p>R$ 245,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+
+            <div class="produto" data-descricao="Tamanho: 90/90-18 | Com câmara | Posição: Traseira | Índice de velocidade: P">
+                <img src="https://www.bartofil.com.br/media/catalog/product/1/1/117090_a.jpg" alt="PNEU RINALD" />
+                <h3>PNEU RINALD 90/90-18 BS 32</h3>
+                <p>R$230,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+
+            <div class="produto" data-descricao="Tamanho: 2.75-18 | Com câmara | Posição: Dianteira | Índice de velocidade: P">
+                <img src="https://www.bartofil.com.br/media/catalog/product/1/1/117090_a.jpg" alt="PNEU RINALDI" />
+                <h3>PNEU RINALDI 2.75/18 BS 32</h3>
+                <p>R$230,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+
+            <div class="produto" data-descricao="Tamanho: 110/90-17 | Com câmara | Posição: Traseira | Quantidade de pneus: 1">
+                <img src="https://www.bartofil.com.br/media/catalog/product/1/1/118972_a.jpg" alt="PNEU RINALDI 110" />
+                <h3>PNEU RINALDI 110/90-17 RT-36</h3>
+                <p>R$370,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+
+            <div class="produto" data-descricao="Tamanho: 90/90-19 | Com câmara | Posição: Dianteira | Quantidade de pneus: 1">
+                <img src="https://www.bartofil.com.br/media/catalog/product/1/1/118971_a.jpg" alt="PNEU RINALDI 90" />
+                <h3>PNEU RINALDI 90/90-19 RT 36</h3>
+                <p>R$300,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+
+            <div class="produto" data-descricao="Tamanho: 110/90-17 | Com câmara | Posição: Traseira | Índice de velocidade: P">
+                <img src="https://www.bartofil.com.br/media/catalog/product/1/1/117104_a.jpg" alt="PNEU RINALDI 110" />
+                <h3>PNEU RINALDI 110/90-17 R34</h3>
+                <p>R$400,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+
+            <div class="produto" data-descricao="Tamanho: 90/90-19 | Com câmara | Posição: Dianteira | Índice de velocidade: T">
+                <img src="https://www.bartofil.com.br/media/catalog/product/1/1/117083_a.jpg" alt="PNEU RINALDI 90" />
+                <h3>PNEU RINALDI 90/90-19 R34</h3>
+                <p>R$295,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SEÇÃO ÓLEOS ========== -->
+    <section class="section" id="oleos">
+        <h2 class="titulo">ÓLEOS</h2>
+        <div class="produtos">
+            <div class="produto" data-descricao="Óleo robusto para motores antigos. Proteção extra para motos 4 tempos com bastante uso. Verifique o manual do seu veículo.">
+                <img src="https://paulinhomotos.fbitsstatic.net/img/p/oleo-mobil-4t-20w50-mineral-litro-86917/284373-2.jpg" alt="Óleo Mobil" />
+                <h3>Óleo Mobil 20w50</h3>
+                <p>R$ 35,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+
+            <div class="produto" data-descricao="Semissintético para motocicletas. Consulte o manual do proprietário para confirmar viscosidade e especificações (API e JASO).">
+                <img src="https://images.tcdn.com.br/img/img_prod/1213254/oleo_mobil_super_moto_10w30_semissintetico_1litro_689_1_4eef52bd9e230c183fc280d3e7d8b78b.jpg" alt="Óleo Mobil 10w30" />
+                <h3>Óleo Mobil 10w30</h3>
+                <p>R$ 45,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+
+            <div class="produto" data-descricao="Viscosidade: 20W-50 | API SL | JASO MA2 | Mineral | Aplicação: Motocicleta 4 tempos">
+                <img src="https://cdn.pli-petronas.com/2022-05/Pack%20Sprinta%20F300%204T%2020W50%20-%201L.png" alt="Óleo Petronas" />
+                <h3>Óleo Petronas 20w50</h3>
+                <p>R$ 35,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+
+            <div class="produto" data-descricao="Viscosidade: 10W-30 | API SL | JASO MA2 | Aplicação: Motocicleta 4 tempos">
+                <img src="https://cdn.pli-petronas.com/styles/image_275x255/s3/2022-05/Pack%20Sprinta%20F500%204T%2010W30%20-%201L.png" alt="Óleo Petronas 10w30" />
+                <h3>Óleo Petronas 10w30</h3>
+                <p>R$ 45,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SEÇÃO EMBREAGEM ========== -->
+    <section class="section" id="embreagem">
+        <h2 class="titulo">KIT EMBREAGEM</h2>
+        <div class="produtos">
+            <div class="produto" data-descricao="Aplicação: Honda CG-125, CG-150, NXR-150 Bros | Completo e pré-oleado | Discos e molas de qualidade superior">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_890847-MLB87788731562_072025-F.webp" alt="KIT EMBREAGEM" />
+                <h3>KIT EMBREAGEM TITAN 125/150 WGK</h3>
+                <p>R$ 220,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+
+            <div class="produto" data-descricao="Aplicação: Yamaha YBR-125 | Completo com molas | Performance consistente e confiável">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_890847-MLB87788731562_072025-F.webp" alt="KIT EMBREAGEM YBR" />
+                <h3>KIT EMBREAGEM YBR 125 WGK</h3>
+                <p>R$ 220,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+
+            <div class="produto" data-descricao="Aplicação: Honda CG-160, NXR-160 Bros | Completo com 3 molas | Encaixe perfeito">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_890847-MLB87788731562_072025-F.webp" alt="KIT EMBREAGEM 160" />
+                <h3>KIT EMBREAGEM TITAN 160 3MOLAS WGK</h3>
+                <p>R$ 220,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+
+            <div class="produto" data-descricao="Aplicação: Honda CG-125/150/160, NXR-150 Bros, NXR-160, XRE-190 | 6 molas | Performance competição">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_799514-MLB98197001316_112025-F.webp" alt="KIT COMPETIÇÃO" />
+                <h3>KIT EMBREAGEM COMPETIÇÃO 150 6MOLAS WGK</h3>
+                <p>R$ 250,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+
+            <div class="produto" data-descricao="6 discos largos sintetizados | Alta resistência ao calor | Maior vida útil | Marca WW3">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_914610-MLB76396074429_052024-F-disco-embreagem-crf230cg150160-6d-largos-sintetizados-ww3.webp" alt="DISCO EMBREAGEM" />
+                <h3>DISCO DE EMBREAGEM 125/150/160 WW3</h3>
+                <p>R$ 65,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+
+            <div class="produto" data-descricao="Aplicação: Honda CG-125/150/160, NXR Bros, XRE-190 | Alta qualidade | Melhor dissipação de calor">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_764675-MLB90272426710_082025-F.webp" alt="DISCO EMBREAGEM WGK" />
+                <h3>DISCO DE EMBREAGEM 125/150/160 WGK</h3>
+                <p>R$ 70,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+
+            <div class="produto" data-descricao="Aplicação: Yamaha XTZ-125, YBR-125, YBR-125 Factor | Acoplamento eficaz | Durável">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_764675-MLB90272426710_082025-F.webp" alt="DISCO EMBREAGEM YBR" />
+                <h3>DISCO DE EMBREAGEM YBR 125 WGK</h3>
+                <p>R$ 70,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SEÇÃO CARBURADOR ========== -->
+    <section class="section" id="carburador">
+        <h2 class="titulo">CARBURADOR</h2>
+        <div class="produtos">
+            <div class="produto" data-descricao="Marca: SMARTFOX MOD.ORIGINAL | CG Titan 150 (2004-2008) | Carburador completo | Garantia 90 dias">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_603330-MLB101410642636_122025-F.webp" alt="CARBURADOR TITAN 150" />
+                <h3>CARBURADOR TITAN 150 04-08</h3>
+                <p>R$240,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="CARBURADOR COMPLETO SMARTFOX | TITAN 125 2002-2004 | FAN 125 2005-2008 | Produto novo com NF">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_906952-MLB101412511852_122025-F.webp" alt="CARBURADOR TITAN 125" />
+                <h3>CARBURADOR TITAN 125 02-04</h3>
+                <p>R$240,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="CARBURADOR COMPLETO SMARTFOX | CG 125 76-88, TODAY 125 89-94, TITAN 125 95-99, C/ ECCO">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_791235-MLB72219874108_102023-F.webp" alt="CARBURADOR TITAN 125 ECCO" />
+                <h3>CARBURADOR TITAN 125 83-01 C/ ECCO</h3>
+                <p>R$245,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="CARBURADOR COMPLETO SMARTFOX | HONDA NX4 FALCON 400 1999-2008 | Garantia 3 meses">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_923887-MLB101986677469_122025-F.webp" alt="CARBURADOR NX400" />
+                <h3>CARBURADOR NX400 FALCON 99-08</h3>
+                <p>R$380,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="CARBURADOR COMPLETO SMARTFOX | HONDA CBX TWISTER 250 - 2001 A 2008 | Garantia 3 meses">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_891687-MLB99033993782_112025-F.webp" alt="CARBURADOR CBX 250" />
+                <h3>CARBURADOR CBX 250 01-08</h3>
+                <p>R$450,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="CARBURADOR COMPLETO | YBR FACTOR 125 2000-2008 | MARCA: SMARTFOX | Garantia 3 meses">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_970109-MLB95475420575_102025-F.webp" alt="CARBURADOR YBR" />
+                <h3>CARBURADOR YBR 00-08</h3>
+                <p>R$200,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Marca: SMARTFOX | Honda Biz 100 1998-2005 | Completo | Garantia legal 90 dias">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_921828-MLB94260340654_102025-F.webp" alt="CARBURADOR BIZ 100" />
+                <h3>CARBURADOR BIZ 100</h3>
+                <p>R$250,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SEÇÃO ILUMINAÇÃO ========== -->
+    <section class="section" id="iluminacao">
+        <h2 class="titulo">ILUMINAÇÃO</h2>
+        <div class="produtos">
+            <div class="produto" data-descricao="Compatível: CB 250F Twister (2016-2022), CG Titan/Fan 150 (2014-2015), CG Titan/Fan/Start 160 (2016-2024) | LEDs alto brilho | Sem adaptações">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_771126-MLB82442424969_022025-F-kit-4-pisca-seta-de-led-cb250-twister-cg-titan-fan-start-160.webp" alt="KIT PISCA LED" />
+                <h3>KIT PISCA LED STALLION TITAN 160/FAN 160/START160</h3>
+                <p>R$ 100,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: CBX 250 TWISTER, CB 300, XRE 300, XRE 190, TITAN/FAN 125-150, NXR Bros, XR 250 TORNADO | Encaixe rosca universal">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_943611-MLB82843981048_032025-F-kit-4-piscas-seta-twister-titan-fan-125-150-xre-cb-300-bros.webp" alt="KIT PISCA LED STALLION" />
+                <h3>Kit Pisca Led Stallion CG 125/150 e YBR</h3>
+                <p>R$ 80,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: TITAN 150/FAN 125 todas, CG 125 2000-2008, CBX 250 Twister, CB 300 2009-2015, XRE 300 | Com coxim e chicote | Base metálica">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_761026-MLB80924860602_122024-F.webp" alt="Pisca Titan ESQUERDO" />
+                <h3>Pisca Titan 125/150 DIANT.ESQ</h3>
+                <p>R$ 20,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: TITAN 150/FAN 125 todas, CG 125 2000-2008, CBX 250 Twister, CB 300 2009-2015, XRE 300 | Com coxim e chicote | Base metálica">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_761026-MLB80924860602_122024-F.webp" alt="Pisca Titan DIREITO" />
+                <h3>Pisca Titan 125/150 DIANT.DIR</h3>
+                <p>R$ 20,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: TITAN 125-150-160, FAN 125-150-160, START 125-150-160 (2014 em diante) | Lente cristal | 12V">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_600998-MLB84819597433_052025-F.webp" alt="Pisca TITAN 2014 DIR" />
+                <h3>Pisca TITAN 2014 EM DIANTE / DIANT.DIR</h3>
+                <p>R$ 30,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: TITAN 125-150-160, FAN 125-150-160, START 125-150-160 (2014 em diante) | Lente cristal | 12V">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_600998-MLB84819597433_052025-F.webp" alt="Pisca TITAN 2014 ESQ" />
+                <h3>Pisca TITAN 2014 EM DIANTE / DIANT.ESQ</h3>
+                <p>R$ 30,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: NXR Bros 125 2003-2005, NXR Bros 150 2003-2008 | Acabamento perfeito | Carcaça reforçada">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_887666-MLB70556921469_072023-F-4-pisca-seta-xr-200-xlr-125-bros-125150-pop-100-tornado-250.webp" alt="Pisca NXR Bros" />
+                <h3>Pisca Nxr Bros 125/150</h3>
+                <p>R$ 20,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: CBX 250 TWISTER 2001-2008, CG TITAN 125 2000-2004, CG FAN 125 2005-2013, CG TITAN 150 2004-2008 | Idêntico ao original">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_632494-MLB101986677797_122025-F.webp" alt="Pisca NXR 2014 ESQ" />
+                <h3>Pisca Nxr Bros 2014 DIANT.ESQ</h3>
+                <p>R$ 30,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: CBX 250 TWISTER 2001-2008, CG TITAN 125 2000-2004, CG FAN 125 2005-2013, CG TITAN 150 2004-2008 | Idêntico ao original">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_632494-MLB101986677797_122025-F.webp" alt="Pisca NXR 2014 DIR" />
+                <h3>Pisca Nxr Bros 2014 DIANT.DIREITA</h3>
+                <p>R$ 30,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SEÇÃO PARALAMAS ========== -->
+    <section class="section" id="paralamas">
+        <h2 class="titulo">PARALAMAS</h2>
+        <div class="produtos">
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_770811-MLB90637132182_082025-F-paralama-dianteiro-cg-125-titan-0004-fan-125-0508-cores.webp" alt="PARALAMA CG 125"/>
+                <h3>PARALAMA CG 125 00-01 VERDE MARAJÓ</h3>
+                <p>R$45,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_806717-MLB90637132280_082025-F-paralama-dianteiro-cg-125-titan-0004-fan-125-0508-cores.webp" alt="PARALAMA CG 125 VERMELHO"/>
+                <h3>PARALAMA CG 125 00-04 VERMELHO</h3>
+                <p>R$45,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_757715-MLB90637132242_082025-F-paralama-dianteiro-cg-125-titan-0004-fan-125-0508-cores.webp" alt="PARALAMA CG 125 AZUL"/>
+                <h3>PARALAMA CG 125 02 AZUL</h3>
+                <p>R$45,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_747267-MLB90637132224_082025-F-paralama-dianteiro-cg-125-titan-0004-fan-125-0508-cores.webp" alt="PARALAMA CG 125 VERDE"/>
+                <h3>PARALAMA CG 125 02-03 VERDE METALICO</h3>
+                <p>R$40,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_806717-MLB90637132280_082025-F-paralama-dianteiro-cg-125-titan-0004-fan-125-0508-cores.webp" alt="PARALAMA CG 125 SAPUCAI"/>
+                <h3>PARALAMA CG 125 02-03 VERM.SAPUCAÍ</h3>
+                <p>R$40,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_678457-MLB90637132146_082025-F-paralama-dianteiro-cg-125-titan-0004-fan-125-0508-cores.webp" alt="PARALAMA CG 125 PRATA"/>
+                <h3>PARALAMA CG 125 02-03 PRATA IBIÚNA</h3>
+                <p>R$50,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_718487-MLB94061287927_102025-F-paralama-honda-cg-titan-150-job-titan-150-2004-a-2008.webp" alt="PARALAMA CG 150 AZUL"/>
+                <h3>PARALAMA CG 150 TITAN 04 AZUL TWISTER</h3>
+                <p>R$65,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_949416-MLB87785167138_072025-F-paralama-honda-cg-titan-150-job-titan-150-2004-a-2008.webp" alt="PARALAMA CG 150 VERMELHO"/>
+                <h3>PARALAMA CG 150 TITAN 04 VERMELHO</h3>
+                <p>R$65,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_744776-MLB87785167228_072025-F-paralama-honda-cg-titan-150-job-titan-150-2004-a-2008.webp" alt="PARALAMA CG 150 PRETO"/>
+                <h3>PARALAMA CG 150 TITAN 04-08 PRETO PINTADO</h3>
+                <p>R$60,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_685647-MLB87785167120_072025-F-paralama-honda-cg-titan-150-job-titan-150-2004-a-2008.webp" alt="PARALAMA CG 150 FORCE"/>
+                <h3>PARALAMA CG 150 TITAN 06-07 PTA.FORCE</h3>
+                <p>R$60,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_819147-MLB93638332894_102025-F-paralama-honda-cg-titan-150-job-titan-150-2004-a-2008.webp" alt="PARALAMA CG 150 VERDE"/>
+                <h3>PARALAMA CG 150 TITAN 04 VERDE PANTANAL</h3>
+                <p>R$70,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_950600-MLB94061635089_102025-F-paralama-honda-cg-titan-150-job-titan-150-2004-a-2008.webp" alt="PARALAMA CG 150 GUARAU"/>
+                <h3>PARALAMA CG 150 TITAN 07-08 VERMELHO GUARAU</h3>
+                <p>R$55,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_863453-MLB90170521660_082025-F-paralama-traseiro-cg-titan-150-2004-2005-2006-2007-2008.webp" alt="PARALAMA TRASEIRO CG 150"/>
+                <h3>PARALAMA TRAS. CG 150 04-08</h3>
+                <p>R$65,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_886348-MLB75978260065_042024-F-paralama-traseiro-suporte-placa-cg-titan-fan-125-2000-2008.webp" alt="PARALAMA TRASEIRO CG 125"/>
+                <h3>PARALAMA TRAS. CG TITAN/FAN 125 00-08</h3>
+                <p>R$80,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_732249-MLB84094283208_052025-F-paralama-suporte-placa-rabeta-fan-start-160150125-201423.webp" alt="PARALAMA TRASEIRO FAN"/>
+                <h3>PARALAMA TRAS. FAN/START 14/24 (A)</h3>
+                <p>R$90,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_995946-MLB53199980772_012023-F-paralama-traseiro-cg-titan-160-ano-2016-a-2022.webp" alt="PARALAMA TRASEIRO TITAN 160"/>
+                <h3>PARALAMA TRAS. TITAN 160 16-24 (A)</h3>
+                <p>R$85,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SEÇÃO COMPLEMENTOS TRANSMISSÃO ========== -->
+    <section class="section" id="complementos">
+        <h2 class="titulo">COMPLEMENTOS TRANSMISSÃO</h2>
+        <div class="produtos">
+            <div class="produto" data-descricao="Pinhão 13 dentes em aço para CG 150, uso direto ou reposição.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_819365-MLB82330026582_022025-F-pinhao-15-dentes-cg-titan-125-150-160-bros-125-150-xre-190.webp" alt="PINHÃO CG 150 13D" />
+                <h3>PINHÃO CG 150 13D</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Pinhão 14 dentes em aço 1045 para CG 150.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_819365-MLB82330026582_022025-F-pinhao-15-dentes-cg-titan-125-150-160-bros-125-150-xre-190.webp" alt="PINHÃO CG 150 14D" />
+                <h3>PINHÃO CG 150 14D</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Pinhão 15 dentes para CG 150.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_819365-MLB82330026582_022025-F-pinhao-15-dentes-cg-titan-125-150-160-bros-125-150-xre-190.webp" alt="PINHÃO CG 150 15D" />
+                <h3>PINHÃO CG 150 15D</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Pinhão 16 dentes para CG 150.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_819365-MLB82330026582_022025-F-pinhao-15-dentes-cg-titan-125-150-160-bros-125-150-xre-190.webp" alt="PINHÃO CG 150 16D" />
+                <h3>PINHÃO CG 150 16D</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Pinhão 17 dentes para CG 150.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_819365-MLB82330026582_022025-F-pinhao-15-dentes-cg-titan-125-150-160-bros-125-150-xre-190.webp" alt="PINHÃO CG 150 17D" />
+                <h3>PINHÃO CG 150 17D</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Pinhão 14 dentes para Fan 125.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_819365-MLB82330026582_022025-F-pinhao-15-dentes-cg-titan-125-150-160-bros-125-150-xre-190.webp" alt="PINHÃO FAN 125 14D" />
+                <h3>PINHÃO FAN 125 14D</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Pinhão 15 dentes NX400 Falcon.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_762118-MLB92454169148_092025-F.webp" alt="PINHÃO NX400 15D" />
+                <h3>PINHÃO NX400 FALCON 15D</h3>
+                <p>R$ 60,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Pinhão 13 dentes XTZ 250 Lander.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_899945-MLB73309786331_122023-F.webp" alt="PINHÃO XTZ 250 13D" />
+                <h3>PINHÃO XTZ 250 LANDER 13D</h3>
+                <p>R$ 55,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Corrente 428H/118 elos com retentor para CG 150 e similares.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_814621-MLB51652447807_092022-O-corrente-transmisso-cg-150-titanfan-40530-kvs-902-original.webp" alt="CORRENTE CG150 428H" />
+                <h3>CORRENTE TRANSMISSÃO CG 150 428H/118ELOS</h3>
+                <p>R$00,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Corrente 428H/116 elos para CG 125 99/08.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_814621-MLB51652447807_092022-O-corrente-transmisso-cg-150-titanfan-40530-kvs-902-original.webp" alt="CORRENTE CG125" />
+                <h3>CORRENTE TRANSMISSÃO CG 125 99/08 428H/116ELOS</h3>
+                <p>R$00,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Corrente 428H/118 elos com retentor reforçado.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_814621-MLB51652447807_092022-O-corrente-transmisso-cg-150-titanfan-40530-kvs-902-original.webp" alt="CORRENTE 428H RETENTOR" />
+                <h3>CORRENTE TRANSMISSÃO 428H/118ELOS C/ RETENTOR</h3>
+                <p>R$135,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Corrente 428H/130 elos para NXR 150 Bros.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_814621-MLB51652447807_092022-O-corrente-transmisso-cg-150-titanfan-40530-kvs-902-original.webp" alt="CORRENTE NXR 150" />
+                <h3>CORRENTE TRANSMISSÃO NXR 150 428H/130ELOS</h3>
+                <p>R$60,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Corrente 520H+110 elos para CB300/CRF230.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_814621-MLB51652447807_092022-O-corrente-transmisso-cg-150-titanfan-40530-kvs-902-original.webp" alt="CORRENTE 520H" />
+                <h3>CORRENTE TRANSMISSÃO CB300/CRF230 520H+110L</h3>
+                <p>R$85,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Corrente 520H+110 elos com retentor para CB300/CRF230.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_814621-MLB51652447807_092022-O-corrente-transmisso-cg-150-titanfan-40530-kvs-902-original.webp" alt="CORRENTE 520H RETENTOR" />
+                <h3>CORRENTE TRANSMISSÃO CB300/CRF230 520H+110L C/ RETENTOR</h3>
+                <p>R$200,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Emenda 428H com retentor.">
+                <img src="https://down-br.img.susercontent.com/file/br-11134207-7r98o-m5ynezu1ok1xe7" alt="EMENDA 428H RETENTOR" />
+                <h3>EMENDA CORRENTE 428H C/ RETENTOR</h3>
+                <p>R$18,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Emenda 428H padrão clip.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_771977-MLB73508377762_122023-O.webp" alt="EMENDA 428H" />
+                <h3>EMENDA CORRENTE 428H</h3>
+                <p>R$6,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Emenda 520H padrão clip.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_771977-MLB73508377762_122023-O.webp" alt="EMENDA 520H" />
+                <h3>EMENDA CORRENTE 520H</h3>
+                <p>R$9,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Emenda 520H com retentor.">
+                <img src="https://down-br.img.susercontent.com/file/br-11134207-7r98o-m5ynezu1ok1xe7" alt="EMENDA 520H RETENTOR" />
+                <h3>EMENDA CORRENTE 520H C/ RETENTOR</h3>
+                <p>R$20,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SEÇÃO TRANSMISSÃO ========== -->
+    <section class="section" id="transmissao">
+        <h2 class="titulo">KIT TRANSMISSÃO</h2>
+        <div class="produtos">
+            <div class="produto" data-descricao="KIT RELAÇÃO COMPLETO - CG TITAN FAN 125 2000-2008 | Aço 1045 | Corrente 428HX116L | 44 dentes coroa, 14 dentes pinhão">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_912639-MLB90656036100_082025-F.webp" alt="KIT TRANSMISSÃO CG 125" />
+                <h3>KIT TRANSMISSÃO CG 125/2000</h3>
+                <p>R$ 120,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="KIT RELAÇÃO COMPLETO - CG TITAN FAN 150 2004-2014 | Aço 1045 | Corrente 428HX118L com retentor | 43 dentes coroa, 16 dentes pinhão">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_912639-MLB90656036100_082025-F.webp" alt="KIT TRANSMISSÃO CG 150" />
+                <h3>KIT TRANSMISSÃO CG 150 TIT/FAN</h3>
+                <p>R$ 120,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="KIT RELAÇÃO COMPLETO - CG TITAN FAN 160 2014-2025 | Aço 1045 | Corrente 428HX118L | 44 dentes coroa, 15 dentes pinhão">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_912639-MLB90656036100_082025-F.webp" alt="KIT TRANSMISSÃO CG 160" />
+                <h3>KIT TRANSMISSÃO CG 160 TIT/FAN/START</h3>
+                <p>R$ 120,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="KIT TRANSMISSÃO - NXR BROS 125 2003-2005 | 54 dentes coroa, 17 dentes pinhão | Corrente 428x132">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_672172-MLB81858277126_012025-F.webp" alt="KIT TRANSMISSÃO NXR 125" />
+                <h3>KIT TRANSMISSÃO NXR 125 BROS</h3>
+                <p>R$160,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="KIT TRANSMISSÃO - NXR BROS 150 2004-2015 | Aço 1045 | 50 dentes coroa, 17 dentes pinhão | Corrente 428HX130L">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_672172-MLB81858277126_012025-F.webp" alt="KIT TRANSMISSÃO NXR 150" />
+                <h3>KIT TRANSMISSÃO NXR 150 BROS</h3>
+                <p>R$160,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="KIT TRANSMISSÃO - NXR 160 BROS | Com retentor | Aço 1045 | 48 dentes coroa, 16 dentes pinhão | Corrente 428HX128L">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_825693-MLB87980538223_072025-F.webp" alt="KIT TRANSMISSÃO NXR 160" />
+                <h3>KIT TRANSMISSÃO NXR 160 BROS C/RETENTOR</h3>
+                <p>R$180,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="KIT TRANSMISSÃO - CB 300 2009-2015 | Aço 1045 | 37 dentes coroa, 13 dentes pinhão | Corrente 520H110L">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_674109-MLB93655580508_102025-F.webp" alt="KIT TRANSMISSÃO CB 300" />
+                <h3>KIT TRANSMISSÃO CB 300 09/15</h3>
+                <p>R$ 180,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="KIT TRANSMISSÃO - XR 250 TORNADO 2001-2008 | 38 dentes coroa, 13 dentes pinhão | Corrente 520H104L com retentor">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_802347-MLB88298246046_072025-F.webp" alt="KIT TRANSMISSÃO XR250" />
+                <h3>KIT TRANSMISSÃO XR250</h3>
+                <p>R$ 180,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="KIT TRANSMISSÃO - CBX 250 TWISTER 2001-2008 | 37 dentes coroa, 13 dentes pinhão | Corrente 520H106L">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_914101-MLB93963923871_102025-F.webp" alt="KIT TRANSMISSÃO CBX250" />
+                <h3>KIT TRANSMISSÃO CBX250 05-08</h3>
+                <p>R$ 170,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="KIT TRANSMISSÃO - XRE 300 2009-2018 | 39 dentes coroa, 13 dentes pinhão | Corrente 520HX104L">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_862915-MLB91961637408_092025-F.webp" alt="KIT TRANSMISSÃO XRE 300" />
+                <h3>KIT TRANSMISSÃO XRE 300 09/18</h3>
+                <p>R$ 200,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="KIT TRANSMISSÃO - XTZ LANDER 250 2006-2025 | 46 dentes coroa, 15 dentes pinhão | Aço 1045">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_930580-MLB87314267586_072025-F.webp" alt="KIT TRANSMISSÃO XTZ" />
+                <h3>KIT TRANSMISSÃO XTZ LANDER 250 09-25</h3>
+                <p>R$ 160,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="KIT TRANSMISSÃO - YBR FACTOR 125 2009-2014 | 45 dentes coroa, 14 dentes pinhão | Corrente 428H118L">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_800954-MLB93655482208_102025-F.webp" alt="KIT TRANSMISSÃO YBR" />
+                <h3>KIT TRANSMISSÃO YBR FACTOR 09/14</h3>
+                <p>R$ 150,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="KIT TRANSMISSÃO - FAZER 250 2005-2017 | Com retentor | 45 dentes coroa, 15 dentes pinhão | Corrente 428H132L">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_984158-MLB82292743907_022025-F.webp" alt="KIT TRANSMISSÃO FAZER 250" />
+                <h3>KIT TRANSMISSÃO FAZER 250 05-17</h3>
+                <p>R$ 160,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SEÇÃO BUCHAS/COXINS ========== -->
+    <section class="section" id="buchas">
+        <h2 class="titulo">BUCHAS E COXINS</h2>
+        <div class="produtos">
+            <div class="produto" data-descricao="Compatível: Honda CG 150 TITAN/FAN 2004-2015, CG 160 TITAN/FAN/START 2016-2025 | Código original: 41241-KRM-860">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_982420-MLB83184367078_042025-F.webp" alt="COXIM COROA HONDA" />
+                <h3>COXIM COROA 150/160 HONDA</h3>
+                <p>R$ 75,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: Honda CG 150 TITAN/FAN 2004-2015, CG 160 TITAN/FAN/START 2016-2025 | Marca: SMARTFOX">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_800182-MLB102135907638_122025-F.webp" alt="COXIM COROA SMARTFOX" />
+                <h3>COXIM COROA 150/160 SMARTFOX</h3>
+                <p>R$ 35,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: CBX 250 TWISTER 2001-2008, CB300R 2010-2015 | Kit com 4 coxins | Código original: 41241-KPF-900">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_906211-MLB75985047251_042024-F.webp" alt="COXIM COROA CBX/CB300" />
+                <h3>COXIM COROA HONDA CBX250/CB 250F/CB 300</h3>
+                <p>R$ 60,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: CBX 250 TWISTER 2001-2008, CB300R 2010-2015 | Kit com coxins | Marca: SMARTFOX">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_786779-MLB76714753845_052024-F.webp" alt="COXIM COROA SMARTFOX CBX" />
+                <h3>COXIM COROA SMARTFOX CBX250/CB 250F/CB 300</h3>
+                <p>R$ 60,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: XRE300 2010-2023, NX400 FALCON, XR250 TORNADO, XR300 TORNADO | Marca: SMARTFOX">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_692325-MLB88811689848_082025-F.webp" alt="COXIM COROA XRE 300" />
+                <h3>COXIM COROA SMARTFOX XRE 300</h3>
+                <p>R$ 50,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: CG 125, TITAN 125, TODAY, TURUNA, ML | Pacote com 4 peças | Ferro">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_943031-MLB73715053400_012024-F-bucha-coxim-coroa-ferro-cg-ml-turuna-titan-125-kit-4-pecas.webp" alt="BUCHA COROA FERRO" />
+                <h3>BUCHA COROA TITAN 125 FERRO</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: CG 125, TITAN 125, TODAY, TURUNA, ML | Pacote com 4 peças | Nylon">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_733660-MLB90051827084_082025-F-bucha-coroa-nylon-roda-honda-cg-fan-titan-125-1983-ate-2008.webp" alt="BUCHA COROA NYLON" />
+                <h3>BUCHA COROA TITAN 125 NYLON</h3>
+                <p>R$ 15,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: TITAN 125/150/160, TODAY, CARGO 125, CBX 200S | Marca: DANIDREA | Bucha do garfo traseiro">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_720584-MLB71126116875_082023-F.webp" alt="BUCHA BALANÇA TITAN" />
+                <h3>BUCHA BALANÇA TITAN 125/150/160 DANIDREA</h3>
+                <p>R$ 35,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: YAMAHA YBR125 2000-2001, YAMAHA FACTOR 125 2009-2015 | Marca: Danidrea">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_720584-MLB71126116875_082023-F.webp" alt="BUCHA BALANÇA YBR" />
+                <h3>BUCHA BALANÇA YBR/RD DANIDREA</h3>
+                <p>R$ 35,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SEÇÃO CABOS ACELERADOR ========== -->
+    <section class="section" id="cabos">
+        <h2 class="titulo">CABO ACELERADOR</h2>
+        <div class="produtos">
+            <div class="produto" data-descricao="Compatível: CG TITAN 99 | Garantia: 30 dias">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR TITAN 99" />
+                <h3>CABO ACELERADOR TITAN 99</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: CG 125 TITAN 2002-2008 | Aplicável em bicicleta motorizada">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR TITAN 125" />
+                <h3>CABO ACELERADOR TITAN 125 00-08</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: CG 150 TITAN ES/KS/ESD 2002-2008, TITAN JOB 2004-2009">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR TITAN 150" />
+                <h3>CABO ACELERADOR TITAN 150</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: CG 150 TITAN 09/..., CG 150 TITAN MIX ES/KS/ESD 09/...">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR TITAN 150 09" />
+                <h3>CABO ACELERADOR TITAN 150 09-13</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: CG 160 TITAN/FAN/START/CARGO 2016-2023">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR TITAN 160" />
+                <h3>CABO ACELERADOR (A) TITAN 160</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: CG 160 TITAN/FAN/START/CARGO 2016-2023 | Modelo B">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR TITAN 160 B" />
+                <h3>CABO ACELERADOR (B) TITAN 160</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: HONDA CBX 250 TWISTER 2001-2008 | Modelo A">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR CBX 250 A" />
+                <h3>CABO ACELERADOR CBX 250 (A) 00-08</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: HONDA CBX 250 TWISTER 2001-2008 | Modelo B">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR CBX 250 B" />
+                <h3>CABO ACELERADOR CBX 250 (B) 00-08</h3>
+                <p>R$ 40,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: HONDA XR 250 TORNADO 2001-2008 | Modelo A">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR XR 250 A" />
+                <h3>CABO ACELERADOR XR 250 TORNADO (A)</h3>
+                <p>R$ 20,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: XRE 190 2016 em diante | Modelo A">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR XRE 190 A" />
+                <h3>CABO ACELERADOR XRE 190 (A)</h3>
+                <p>R$ 30,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: XRE 190 2016 em diante | Modelo B">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR XRE 190 B" />
+                <h3>CABO ACELERADOR XRE 190 (B)</h3>
+                <p>R$ 00,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: XRE 300 | Modelo A">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR XRE 300 A" />
+                <h3>CABO ACELERADOR XRE 300 (A)</h3>
+                <p>R$ 35,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: XRE 300 | Modelo B">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR XRE 300 B" />
+                <h3>CABO ACELERADOR XRE 300 (B)</h3>
+                <p>R$ 35,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: NXR 125 BROS 2003-2005">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR NXR 125" />
+                <h3>CABO ACELERADOR NXR 125 BROS 03-05</h3>
+                <p>R$ 20,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: NXR 150 BROS 2005-2008">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR NXR 150" />
+                <h3>CABO ACELERADOR NXR 150 BROS 05-08</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: NXR 150 BROS 2009-2013">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR NXR 150 09" />
+                <h3>CABO ACELERADOR NXR 150 BROS 09-13</h3>
+                <p>R$ 30,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: NXR 160 BROS | Modelo A">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR NXR 160 A" />
+                <h3>CABO ACELERADOR NXR 160 BROS (A)</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: NXR 160 BROS | Modelo B">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR NXR 160 B" />
+                <h3>CABO ACELERADOR NXR 160 BROS (B)</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: CB 300 2009-2015 | Modelo A">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR CB 300 A" />
+                <h3>CABO ACELERADOR CB 300 (A) 09-15</h3>
+                <p>R$ 30,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: CB 300 2009-2015 | Modelo B">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR CB 300 B" />
+                <h3>CABO ACELERADOR CB 300 (B) 09-15</h3>
+                <p>R$ 20,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: CRF 230 | Modelo A">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR CRF 230" />
+                <h3>CABO ACELERADOR CRF 230 (A)</h3>
+                <p>R$ 35,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: YBR 125 2000-2002 | Chapa torta">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR YBR TORTA" />
+                <h3>CABO ACELERADOR YBR 125 00-02 CHAPA TORTA</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: YBR 125 2002-2008 | Chapa reta">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR YBR RETA" />
+                <h3>CABO ACELERADOR YBR 125 02-08 CHAPA RETA</h3>
+                <p>R$ 30,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: FACTOR 125 2009">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR FACTOR 125" />
+                <h3>CABO ACELERADOR FACTOR 125 2009</h3>
+                <p>R$ 20,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: XTZ 125 2003-2008">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR XTZ 125 03" />
+                <h3>CABO ACELERADOR XTZ 125 03-08</h3>
+                <p>R$ 30,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: XTZ 125 2009">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR XTZ 125 09" />
+                <h3>CABO ACELERADOR XTZ 125 2009</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: XTZ 150 2014-2024">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR XTZ 150" />
+                <h3>CABO ACELERADOR XTZ 150 14-24</h3>
+                <p>R$ 40,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: XTZ 250 LANDER">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR XTZ 250" />
+                <h3>CABO ACELERADOR XTZ 250 LANDER</h3>
+                <p>R$ 30,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: SUZUKI YES 125">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR YES 125" />
+                <h3>CABO ACELERADOR SUZUKI YES 125</h3>
+                <p>R$ 20,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: SHINERAY JET 50">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR JET 50" />
+                <h3>CABO ACELERADOR SHINERAY JET 50</h3>
+                <p>R$ 20,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível: SHINERAY PHOENIX 50">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO ACELERADOR PHOENIX 50" />
+                <h3>CABO ACELERADOR SHINERAY PHOENIX 50</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SEÇÃO CABO VELOCÍMETRO ========== -->
+    <section class="section" id="cabos-velocimetro">
+        <h2 class="titulo">CABO VELOCÍMETRO</h2>
+        <div class="produtos">
+            <div class="produto" data-descricao="Cabo velocímetro para CBX250 Twister 2001-2008.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO VELOCIMETRO CBX 250" />
+                <h3>CABO VELOCIMETRO CBX 250 01-08</h3>
+                <p>R$ 30,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Compatível com TITAN 150 ES/KS/ESD 2004-2008.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO VELOCIMETRO CG150" />
+                <h3>CABO VELOCIMETRO CG 150 TITAN 04-08 KS/ES/ESD</h3>
+                <p>R$30,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Cabo velocímetro CG 150 Titan 2009-2013.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO VELOCIMETRO CG150 09" />
+                <h3>CABO VELOCIMETRO CG 150 TITAN 2009/2013</h3>
+                <p>R$30,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Para YBR Factor 125 2009-2016 com freio a disco dianteiro.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO VELOCIMETRO YBR DISCO" />
+                <h3>CABO VELOCIMETRO YBR FACTOR 125 2009-2013 A DISCO</h3>
+                <p>R$ 25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto" data-descricao="Para YBR Factor 125 2009-2016 freio a tambor dianteiro.">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" alt="CABO VELOCIMETRO YBR TAMBOR" />
+                <h3>CABO VELOCIMETRO YBR FACTOR 125 K TAMBOR</h3>
+                <p>R$25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SEÇÃO MOTOR DE PARTIDA ========== -->
+    <section class="section" id="motor-partida">
+        <h2 class="titulo">MOTOR DE PARTIDA</h2>
+        <div class="produtos">
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_930621-MLB95377592640_102025-F.webp" alt="MOTOR PARTIDA TITAN 125" />
+                <h3>MOTOR DE PARTIDA CG TITAN 125</h3>
+                <p>R$ 250,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_930621-MLB95377592640_102025-F.webp" alt="MOTOR PARTIDA TITAN 150 04" />
+                <h3>MOTOR DE PARTIDA CG TITAN 150 04-08</h3>
+                <p>R$ 250,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_930621-MLB95377592640_102025-F.webp" alt="MOTOR PARTIDA TITAN 150 09" />
+                <h3>MOTOR DE PARTIDA CG TITAN 150 09-13</h3>
+                <p>R$ 250,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_930621-MLB95377592640_102025-F.webp" alt="MOTOR PARTIDA TITAN 160" />
+                <h3>MOTOR DE PARTIDA CG TITAN 160</h3>
+                <p>R$ 300,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_930621-MLB95377592640_102025-F.webp" alt="MOTOR PARTIDA XR 250" />
+                <h3>MOTOR DE PARTIDA XR 250 TORNADO</h3>
+                <p>R$ 300,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_930621-MLB95377592640_102025-F.webp" alt="MOTOR PARTIDA YBR" />
+                <h3>MOTOR DE PARTIDA YBR</h3>
+                <p>R$ 270,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_930621-MLB95377592640_102025-F.webp" alt="MOTOR PARTIDA YES 125" />
+                <h3>MOTOR DE PARTIDA YES 125</h3>
+                <p>R$ 350,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" alt="ESCOVA ARRANQUE BIZ 125" />
+                <h3>ESCOVA ARRANQUE BIZ 125</h3>
+                <p>R$25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" alt="ESCOVA ARRANQUE BIZ 100" />
+                <h3>ESCOVA ARRANQUE BIZ 100</h3>
+                <p>R$25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" alt="ESCOVA ARRANQUE CG 125" />
+                <h3>ESCOVA ARRANQUE CG 125</h3>
+                <p>R$50,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" alt="ESCOVA ARRANQUE CG 150" />
+                <h3>ESCOVA ARRANQUE CG 150</h3>
+                <p>R$50,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" alt="ESCOVA ARRANQUE CG 160" />
+                <h3>ESCOVA ARRANQUE CG 160</h3>
+                <p>R$50,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" alt="ESCOVA ARRANQUE CRF 230" />
+                <h3>ESCOVA ARRANQUE CRF 230</h3>
+                <p>R$45,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" alt="ESCOVA ARRANQUE FAZER 150" />
+                <h3>ESCOVA ARRANQUE FAZER 150</h3>
+                <p>R$30,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" alt="ESCOVA ARRANQUE FAZER 250" />
+                <h3>ESCOVA ARRANQUE FAZER 250</h3>
+                <p>R$70,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" alt="ESCOVA ARRANQUE YBR/FACTOR" />
+                <h3>ESCOVA ARRANQUE YBR125 / FACTOR 2009</h3>
+                <p>R$30,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" alt="ESCOVA ARRANQUE YES 125" />
+                <h3>ESCOVA ARRANQUE SUZUKI YES 125</h3>
+                <p>R$35,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SEÇÃO VELAS DE IGNIÇÃO ========== -->
+    <section class="section" id="velas">
+        <h2 class="titulo">VELA DE IGNIÇÃO</h2>
+        <div class="produtos">
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_754520-MLB97972564549_112025-F-vela-de-ignico-ngk-original-titan-150fan-bros-150-cpr8ea9.webp" alt="VELA TITAN 125" />
+                <h3>VELA IGNIÇÃO NGK TITAN 125 DP8EA-9</h3>
+                <p>R$30,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_754520-MLB97972564549_112025-F-vela-de-ignico-ngk-original-titan-150fan-bros-150-cpr8ea9.webp" alt="VELA TITAN 150/BROS" />
+                <h3>VELA IGNIÇÃO NGK TITAN 150/160/BROS CPR8EA-9</h3>
+                <p>R$35,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_997929-MLB84196101081_042025-F.webp" alt="VELA TITAN 125 SMARTFOX" />
+                <h3>VELA IGNIÇÃO TITAN 125 SMARTFOX DPR8EA-9</h3>
+                <p>R$25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_997929-MLB84196101081_042025-F.webp" alt="VELA TITAN 150/BROS SMARTFOX" />
+                <h3>VELA IGNIÇÃO TITAN 150/160/BROS CPR8EA-9</h3>
+                <p>R$30,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+            <div class="produto">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_997929-MLB84196101081_042025-F.webp" alt="VELA YBR/BIZ/SHINERAY" />
+                <h3>VELA IGNIÇÃO YBR/BIZ/SHINERAY C6HSA</h3>
+                <p>R$25,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== BOTÃO WHATSAPP FLUTUANTE ========== -->
+    <a id="whatsapp" href="https://wa.me/5531984264223" target="_blank" title="Contato WhatsApp">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+    </a>
+
+    <!-- ========== FOOTER ========== -->
+    <footer id="contato">
+        <p><strong>SAMUEL MOTOS © 2025</strong> - Todos os direitos reservados</p>
+        <p>📞 Contato: (31) 98426-4223</p>
+    </footer>
+
+    <!-- ========== MODAL DO PRODUTO ========== -->
+    <div id="modalProduto">
+        <div class="conteudo">
+            <img id="modalImg" src="" alt="Imagem do Produto" />
+            <h2 id="modalTitulo"></h2>
+            <p id="modalPreco"></p>
+            <p id="modalDescricao"></p>
+            <button class="btnCarrinho" onclick="adicionarAoCarrinhoModal()">Adicionar ao Carrinho</button>
+            <button class="btnFechar" onclick="fecharModal()">Fechar</button>
+        </div>
+    </div>
+
+    <!-- ========== ADMIN PAINEL (FRONT-END) ========== -->
+    <div id="adminOverlay">
+        <div id="adminModal">
+            <div class="admin-header">
+                <div>
+                    <div style="font-size: 18px; font-weight: 800; color: #D3D7E1;">Painel Admin</div>
+                    <div style="font-size: 13px; color: #B1A6B3;">Gestão de produtos, preços, estoque e promoções</div>
+                </div>
+                <button class="btn-secundario" onclick="fecharAdmin()">Fechar</button>
+            </div>
+
+            <div class="admin-login" id="adminLogin">
+                <span style="font-weight: 700;">Senha:</span>
+                <input type="password" id="adminSenha" placeholder="Digite a senha" />
+                <button class="btn-primario" onclick="autenticarAdmin()">Entrar</button>
+                <span style="font-size: 12px; color: #B1A6B3;">(padrão: admin123)</span>
+            </div>
+
+            <div id="adminConteudo" style="display: none;">
+                <div class="admin-stats">
+                    <div class="admin-card">
+                        <div style="font-size: 12px; color: #B1A6B3;">Produtos</div>
+                        <div id="statTotal" style="font-size: 22px; font-weight: 800;">0</div>
+                    </div>
+                    <div class="admin-card">
+                        <div style="font-size: 12px; color: #B1A6B3;">Valor em estoque</div>
+                        <div id="statValor" style="font-size: 22px; font-weight: 800;">R$ 0,00</div>
+                    </div>
+                    <div class="admin-card">
+                        <div style="font-size: 12px; color: #B1A6B3;">Preço médio</div>
+                        <div id="statMedio" style="font-size: 22px; font-weight: 800;">R$ 0,00</div>
+                    </div>
+                    <div class="admin-card">
+                        <div style="font-size: 12px; color: #B1A6B3;">Promoções ativas</div>
+                        <div id="statPromos" style="font-size: 22px; font-weight: 800;">0</div>
+                    </div>
+                </div>
+
+                <div class="admin-body">
+                    <form class="admin-form" id="formProduto" onsubmit="salvarProduto(event)">
+                        <input type="hidden" id="adminId" />
+                        <label>Nome
+                            <input id="adminNome" required />
+                        </label>
+                        <label>Categoria
+                            <input id="adminCategoria" placeholder="Ex.: Pneus" />
+                        </label>
+                        <label>Preço (R$)
+                            <input id="adminPreco" type="number" step="0.01" min="0" required />
+                        </label>
+                        <label>Estoque
+                            <input id="adminEstoque" type="number" step="1" min="0" value="0" />
+                        </label>
+                        <label>Promo (%)
+                            <input id="adminPromo" type="number" step="1" min="0" max="90" value="0" />
+                        </label>
+                        <label>Destaque
+                            <select id="adminDestaque">
+                                <option value="nao">Não</option>
+                                <option value="sim">Sim</option>
+                            </select>
+                        </label>
+                        <div class="admin-actions">
+                            <button class="btn-primario" type="submit">Salvar</button>
+                            <button class="btn-secundario" type="button" onclick="resetarFormulario()">Limpar</button>
+                        </div>
+                    </form>
+
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Categoria</th>
+                                <th>Preço</th>
+                                <th>Estoque</th>
+                                <th>Promo</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaProdutos"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script>
+        // ========== BUSCA E NAVEGAÇÃO ==========
+        const campoBusca = document.getElementById("campoBusca");
+        const listaResultados = document.getElementById("resultadoBusca");
+        const btnDepartamentos = document.getElementById("btnDepartamentos");
+        const dropdownDepartamentos = document.getElementById("dropdownDepartamentos");
+
+        const normalizar = (texto) =>
+            (texto || "")
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase();
+
+        const produtosCatalogo = Array.from(document.querySelectorAll(".produto")).map((el) => ({
+            nome: el.querySelector("h3")?.innerText?.trim() || "",
+            preco: el.querySelector("p")?.innerText?.trim() || "",
+            el,
+            secao: el.closest("section")?.id || ""
+        }));
+
+        function mostrarResultados(filtro) {
+            if (!listaResultados) return;
+
+            const termo = normalizar(filtro);
+            if (!termo) {
+                listaResultados.style.display = "none";
+                listaResultados.innerHTML = "";
+                return;
+            }
+
+            const encontrados = produtosCatalogo.filter((p) => normalizar(p.nome).includes(termo)).slice(0, 12);
+
+            if (encontrados.length === 0) {
+                listaResultados.innerHTML = '<div class="item-resultado">Nenhum produto encontrado</div>';
+                listaResultados.style.display = "block";
+                return;
+            }
+
+            listaResultados.innerHTML = encontrados
+                .map(
+                    (p) => `
+                        <div class="item-resultado" data-secao="${p.secao}">
+                            <span>${p.nome}</span>
+                            <span style="color:#aaa;font-size:12px;">${p.preco}</span>
+                        </div>
+                    `
+                )
+                .join("");
+
+            listaResultados.style.display = "block";
+
+            Array.from(listaResultados.querySelectorAll(".item-resultado")).forEach((item, idx) => {
+                item.addEventListener("click", () => {
+                    const alvo = encontrados[idx].el;
+                    alvo.classList.add("produto-destaque");
+                    alvo.scrollIntoView({ behavior: "smooth", block: "center" });
+                    setTimeout(() => alvo.classList.remove("produto-destaque"), 1800);
+                    listaResultados.style.display = "none";
+                });
+            });
+        }
+
+        if (campoBusca) {
+            campoBusca.addEventListener("input", (e) => mostrarResultados(e.target.value));
+
+            campoBusca.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    const primeiro = listaResultados?.querySelector(".item-resultado");
+                    if (primeiro) {
+                        primeiro.click();
+                        e.preventDefault();
+                    }
+                }
+            });
+
+            campoBusca.addEventListener("blur", () => {
+                setTimeout(() => {
+                    if (listaResultados) listaResultados.style.display = "none";
+                }, 200);
+            });
+
+            campoBusca.addEventListener("focus", () => {
+                if (campoBusca.value) mostrarResultados(campoBusca.value);
+            });
+        }
+
+        if (btnDepartamentos && dropdownDepartamentos) {
+            btnDepartamentos.addEventListener("click", () => {
+                const visivel = dropdownDepartamentos.style.display === "block";
+                dropdownDepartamentos.style.display = visivel ? "none" : "block";
+            });
+
+            document.addEventListener("click", (e) => {
+                if (!dropdownDepartamentos.contains(e.target) && !btnDepartamentos.contains(e.target)) {
+                    dropdownDepartamentos.style.display = "none";
+                }
+            });
+        }
+
+        // ========== ESTADO DO CARRINHO ==========
+        let carrinho = [];
+
+        // ========== CARRINHO - ABRIR/FECHAR ==========
+        function abrirCarrinho() {
+            const janela = document.getElementById("janelaCarrinho");
+            janela.style.display = janela.style.display === "block" ? "none" : "block";
+        }
+
+        function fecharCarrinho() {
+            document.getElementById("janelaCarrinho").style.display = "none";
+        }
+
+        // ========== CARRINHO - ADICIONAR ITEM ==========
+        function adicionarAoCarrinho(botao) {
+            const produto = botao.parentElement;
+            const nome = produto.querySelector("h3").innerText;
+            const precoTexto = produto.querySelector("p").innerText
+                .replace("R$", "")
+                .replace(",", ".")
+                .trim();
+
+            const preco = parseFloat(precoTexto);
+            const itemExistente = carrinho.find(item => item.nome === nome);
+
+            if (itemExistente) {
+                itemExistente.quantidade++;
+            } else {
+                carrinho.push({ nome, preco, quantidade: 1 });
+            }
+
+            renderizarCarrinho();
+            atualizarContador();
+            abrirCarrinho();
+        }
+
+        // ========== CARRINHO - REMOVER ITEM ==========
+        function removerItem(index) {
+            carrinho.splice(index, 1);
+            renderizarCarrinho();
+            atualizarContador();
+        }
+
+        // ========== CARRINHO - ALTERAR QUANTIDADE ==========
+        function alterarQtd(index, valor) {
+            carrinho[index].quantidade += valor;
+
+            if (carrinho[index].quantidade <= 0) {
+                carrinho.splice(index, 1);
+            }
+
+            renderizarCarrinho();
+            atualizarContador();
+        }
+
+        // ========== CARRINHO - ATUALIZAR CONTADOR ==========
+        function atualizarContador() {
+            const total = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
+            document.getElementById("contadorCarrinho").innerText = total;
+        }
+
+        // ========== CARRINHO - RENDERIZAR ==========
+        function renderizarCarrinho() {
+            const lista = document.getElementById("listaCarrinho");
+            lista.innerHTML = "";
+
+            carrinho.forEach((item, index) => {
+                const subtotal = (item.preco * item.quantidade).toFixed(2);
+                lista.innerHTML += `
+                    <li>
+                        <div>
+                            <strong>${item.nome}</strong><br>
+                            R$ ${subtotal}
+                        </div>
+                        <div style="display: flex; gap: 4px;">
+                            <button class="btnQtd" onclick="alterarQtd(${index}, -1)">-</button>
+                            <span style="padding: 4px 8px; font-weight: 600;">${item.quantidade}</span>
+                            <button class="btnQtd" onclick="alterarQtd(${index}, 1)">+</button>
+                            <button class="btnRemover" onclick="removerItem(${index})">X</button>
+                        </div>
+                    </li>
+                `;
+            });
+
+            const total = carrinho.reduce((acc, item) => acc + item.preco * item.quantidade, 0).toFixed(2);
+
+            lista.innerHTML += `
+                <li style="font-weight: 700; border: none; margin-top: 10px;">
+                    Total: R$ ${total}
+                </li>
+                <li style="border: none; padding: 0;">
+                    <button onclick="enviarWhats()" style="background: #25d366; color: white; padding: 10px; width: 100%; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 12px;">
+                        Enviar via WhatsApp
+                    </button>
+                </li>
+            `;
+        }
+
+        // ========== WHATSAPP - ENVIAR PEDIDO ==========
+        function enviarWhats() {
+            if (carrinho.length === 0) {
+                alert("Seu carrinho está vazio!");
+                return;
+            }
+
+            let mensagem = "Olá! Gostaria de finalizar meu pedido:%0A%0A";
+
+            carrinho.forEach(item => {
+                const subtotal = (item.preco * item.quantidade).toFixed(2);
+                mensagem += `${item.nome} - Qtd: ${item.quantidade} - R$ ${subtotal}%0A`;
+            });
+
+            const total = carrinho.reduce((acc, i) => acc + i.preco * i.quantidade, 0).toFixed(2);
+            mensagem += `%0A*Total Geral: R$ ${total}*`;
+
+            const numero = "5531984264223";
+            window.open(`https://wa.me/${numero}?text=${mensagem}`, "_blank");
+        }
+
+        // ========== MODAL - ABRIR ==========
+        function abrirModal(elemento) {
+            const card = elemento.closest(".produto");
+            const img = card.querySelector("img").src;
+            const titulo = card.querySelector("h3").innerText;
+            const preco = card.querySelector("p").innerText;
+            const descricao = card.getAttribute("data-descricao") || "Sem descrição disponível.";
+
+            document.getElementById("modalImg").src = img;
+            document.getElementById("modalTitulo").innerText = titulo;
+            document.getElementById("modalPreco").innerText = preco;
+            document.getElementById("modalDescricao").innerText = descricao;
+
+            window.produtoSelecionado = card;
+            document.getElementById("modalProduto").style.display = "flex";
+        }
+
+        // ========== MODAL - FECHAR ==========
+        function fecharModal() {
+            document.getElementById("modalProduto").style.display = "none";
+        }
+
+        // ========== MODAL - ADICIONAR AO CARRINHO ==========
+        function adicionarAoCarrinhoModal() {
+            const botao = window.produtoSelecionado.querySelector("button");
+            adicionarAoCarrinho(botao);
+            fecharModal();
+        }
+
+        // ========== FECHAR MODAL AO CLICAR FORA ==========
+        document.getElementById("modalProduto").addEventListener("click", (e) => {
+            if (e.target.id === "modalProduto") {
+                fecharModal();
+            }
+        });
+
+        // ========== ADMIN PAINEL (FRONT-END / LOCALSTORAGE) ==========
+        const STORAGE_KEY_ADMIN = "samuel_admin_produtos";
+        const ADMIN_TOKEN = "samuelpanel"; // use a custom token for secret access
+        let adminProdutos = [];
+        let adminAutenticado = false;
+
+        function coletarProdutosIniciais() {
+            return Array.from(document.querySelectorAll(".produto")).map((el, index) => {
+                const secao = el.closest("section");
+                const categoria = secao?.querySelector("h2")?.innerText?.trim() || "";
+                const precoTexto = el.querySelector("p")?.innerText?.replace("R$", "").replace(",", ".").trim() || "0";
+                return {
+                    id: Date.now() + index,
+                    nome: el.querySelector("h3")?.innerText?.trim() || "",
+                    categoria,
+                    preco: parseFloat(precoTexto) || 0,
+                    estoque: 0,
+                    promo: 0,
+                    destaque: false
+                };
+            });
+        }
+
+        function carregarProdutosAdmin() {
+            const salvo = localStorage.getItem(STORAGE_KEY_ADMIN);
+            if (salvo) {
+                try {
+                    adminProdutos = JSON.parse(salvo) || [];
+                } catch (err) {
+                    adminProdutos = coletarProdutosIniciais();
+                }
+            } else {
+                adminProdutos = coletarProdutosIniciais();
+            }
+            salvarProdutosAdmin();
+            renderTabelaAdmin();
+        }
+
+        function salvarProdutosAdmin() {
+            localStorage.setItem(STORAGE_KEY_ADMIN, JSON.stringify(adminProdutos));
+        }
+
+        function temTokenSecreto() {
+            const params = new URLSearchParams(window.location.search);
+            const tokenQuery = params.get("admin");
+            const tokenHash = (window.location.hash || "").replace("#", "");
+            return tokenQuery === ADMIN_TOKEN || tokenHash === ADMIN_TOKEN;
+        }
+
+        function abrirAdmin() {
+            const overlay = document.getElementById("adminOverlay");
+            overlay.style.display = "flex";
+            document.getElementById("adminLogin").style.display = adminAutenticado ? "none" : "flex";
+            document.getElementById("adminConteudo").style.display = adminAutenticado ? "block" : "none";
+            if (adminAutenticado) {
+                renderTabelaAdmin();
+            }
+        }
+
+        function fecharAdmin() {
+            document.getElementById("adminOverlay").style.display = "none";
+        }
+
+        function autenticarAdmin() {
+            const senha = document.getElementById("adminSenha").value;
+            if (senha === "admin123") {
+                adminAutenticado = true;
+                document.getElementById("adminLogin").style.display = "none";
+                document.getElementById("adminConteudo").style.display = "block";
+                renderTabelaAdmin();
+            } else {
+                alert("Senha incorreta.");
+            }
+        }
+
+        function formatarPreco(valor) {
+            return `R$ ${valor.toFixed(2).replace(".", ",")}`;
+        }
+
+        function atualizarEstatisticas() {
+            const total = adminProdutos.length;
+            const valorEstoque = adminProdutos.reduce((acc, p) => acc + (p.preco * (p.estoque || 0)), 0);
+            const media = total ? adminProdutos.reduce((acc, p) => acc + p.preco, 0) / total : 0;
+            const promos = adminProdutos.filter((p) => (p.promo || 0) > 0).length;
+
+            document.getElementById("statTotal").innerText = total;
+            document.getElementById("statValor").innerText = formatarPreco(valorEstoque);
+            document.getElementById("statMedio").innerText = formatarPreco(media);
+            document.getElementById("statPromos").innerText = promos;
+        }
+
+        function renderTabelaAdmin() {
+            const corpo = document.getElementById("tabelaProdutos");
+            if (!corpo) return;
+            corpo.innerHTML = "";
+            adminProdutos.forEach((p) => {
+                corpo.innerHTML += `
+                    <tr>
+                        <td>${p.nome}</td>
+                        <td>${p.categoria || "-"}</td>
+                        <td>${formatarPreco(p.preco)}</td>
+                        <td>${p.estoque || 0}</td>
+                        <td>${p.promo || 0}%</td>
+                        <td style="display:flex; gap:6px;">
+                            <button class="btn-secundario" onclick="editarProduto(${p.id})">Editar</button>
+                            <button class="btn-primario" onclick="removerProduto(${p.id})">Del</button>
+                        </td>
+                    </tr>`;
+            });
+            atualizarEstatisticas();
+        }
+
+        function resetarFormulario() {
+            document.getElementById("adminId").value = "";
+            document.getElementById("adminNome").value = "";
+            document.getElementById("adminCategoria").value = "";
+            document.getElementById("adminPreco").value = "";
+            document.getElementById("adminEstoque").value = "0";
+            document.getElementById("adminPromo").value = "0";
+            document.getElementById("adminDestaque").value = "nao";
+        }
+
+        function salvarProduto(event) {
+            event.preventDefault();
+            const id = document.getElementById("adminId").value;
+            const nome = document.getElementById("adminNome").value.trim();
+            const categoria = document.getElementById("adminCategoria").value.trim();
+            const preco = parseFloat(document.getElementById("adminPreco").value) || 0;
+            const estoque = parseInt(document.getElementById("adminEstoque").value || "0", 10);
+            const promo = parseInt(document.getElementById("adminPromo").value || "0", 10);
+            const destaque = document.getElementById("adminDestaque").value === "sim";
+
+            if (!nome) return;
+
+            if (id) {
+                adminProdutos = adminProdutos.map((p) => (p.id === Number(id) ? { ...p, nome, categoria, preco, estoque, promo, destaque } : p));
+            } else {
+                adminProdutos.push({ id: Date.now(), nome, categoria, preco, estoque, promo, destaque });
+            }
+
+            salvarProdutosAdmin();
+            renderTabelaAdmin();
+            resetarFormulario();
+        }
+
+        function editarProduto(id) {
+            const produto = adminProdutos.find((p) => p.id === id);
+            if (!produto) return;
+            document.getElementById("adminId").value = produto.id;
+            document.getElementById("adminNome").value = produto.nome;
+            document.getElementById("adminCategoria").value = produto.categoria || "";
+            document.getElementById("adminPreco").value = produto.preco;
+            document.getElementById("adminEstoque").value = produto.estoque || 0;
+            document.getElementById("adminPromo").value = produto.promo || 0;
+            document.getElementById("adminDestaque").value = produto.destaque ? "sim" : "nao";
+        }
+
+        function removerProduto(id) {
+            if (!confirm("Remover produto?")) return;
+            adminProdutos = adminProdutos.filter((p) => p.id !== id);
+            salvarProdutosAdmin();
+            renderTabelaAdmin();
+        }
+
+        // Inicializa dados admin ao carregar
+        carregarProdutosAdmin();
+
+        // Verifica acesso secreto via token em querystring ou hash
+        if (temTokenSecreto()) {
+            abrirAdmin();
+        }
+    </script>
+</body>
+</html>

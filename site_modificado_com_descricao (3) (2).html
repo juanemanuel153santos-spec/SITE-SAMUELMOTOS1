@@ -1,0 +1,2065 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAMUEL MOTOS ltda.</title>
+
+
+    <!-- Fonte Moderna -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background: #ffffff; color: #111; }
+
+        header {
+            width: 100%;
+            background: #160283;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        header h1 { font-size: 26px; font-weight: bold; letter-spacing: 1px; }
+        nav a {
+            color: #ffffff;
+            margin-left: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        nav a:hover { color: #ffbb00; }
+
+        .hero {
+            margin-top: 90px;
+            width: 100%;
+            background: url('') center/cover;
+            height: 380px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #000000;
+        }
+
+        .hero h2 { font-size: 40px; text-shadow: 2px 2px 5px #000; }
+
+        .section { padding: 50px 40px; }
+
+        .titulo {
+            font-size: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #ff0000;
+            padding-left: 12px;
+        }
+
+        .categorias {
+           
+            
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+            background:#ffffff
+        
+        }
+    .categorias a button {
+            padding: 12px 20px;
+            background: #160283;
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .cat {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .cat:hover { transform: translateY(-5px); }
+
+        .produtos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px,5fr));
+            gap: 20px;
+        }
+
+        .produto {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            transition: 0.2s;
+        }
+
+        .produto img { width: 50%; border-radius: 50px; }
+        .produto h3 { margin-top: 10px; font-size: 15px; }
+        .produto p { margin: 6px 0; font-weight: bold; color: #444; }
+        .produto button {
+            background: #111;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .produto button:hover { background: #fcb900; color: #000; }
+ /* CARRINHO */
+        #iconeCarrinho {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #111;
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 22px;
+            z-index: 2000;
+        }
+
+        #janelaCarrinho {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            width: 320px;
+            background: #fff;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            display: none;
+            z-index: 3000;
+        }
+
+        #janelaCarrinho ul { list-style: none; padding:0; margin:0 }
+        #janelaCarrinho li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btnQtd {
+            padding: 2px 4px;
+            background: #111;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btnRemover {
+            background: #b70000;
+            padding: 1px 3px;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        footer {
+            margin-top: 40px;
+            background: #111;
+            color: #fff;
+            text-align: center;
+            padding: 25px;
+        }
+        .produto {
+            border-radius: 18px;
+            background: #fff;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.1);
+        }
+        .produto {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero {
+            background: linear-gradient(
+                    rgba(0,0,0,0.0),
+                    rgba(0,0,0,0.0)
+            ), url("https://br.pinterest.com/pin/37365871903900527/") center/cover;
+        }
+
+/* POP-UP DE DETALHES DO PRODUTO */
+#modalProduto {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 5000;
+}
+
+#modalProduto .conteudo {
+    width: 50%;
+    max-width: 360px;
+    background: #fff;
+    padding: 18px;
+    border-radius: 14px;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.3);
+}
+
+#modalProduto img { width: 50%; border-radius: 12px; }
+#modalProduto h2 { margin-top: 10px; }
+#modalProduto p { margin: 8px 0; }
+#modalProduto .btnFechar {
+    background: #b70000;
+    color: #fff;
+    width: 100%; padding: 10px;
+    border: none; border-radius: 8px;
+    margin-top: 10px; cursor: pointer;
+}
+#modalProduto .btnCarrinho {
+    background: #111;
+    color: #fff;
+    width: 100%; padding: 12px;
+    border: none; border-radius: 8px;
+    margin-top: 10px; cursor: pointer;
+
+  
+</style>
+</head>
+
+<body>
+
+<!-- ÍCONE DO CARRINHO -->
+<div id="iconeCarrinho" onclick="abrirCarrinho()">
+    🛒 <span id="contadorCarrinho">0</span>
+</div>
+
+<!-- JANELA DO CARRINHO -->
+<div id="janelaCarrinho">
+    <h3>Seu Carrinho</h3>
+    <ul id="listaCarrinho"></ul>
+    <button onclick="fecharCarrinho()" style="margin-top:15px; width:100%;">Fechar</button>
+</div>
+<header>
+    <h1>SAMUEL MOTOS</h1>
+    <nav>
+        <a href="#home">Início</a>
+        <a href="#categorias">Categorias</a>
+        <a href="#produtos">Produtos</a>
+        <a href="#contato">Contato</a>
+    
+    </nav>
+</header>
+
+<section class="hero" id="home">
+
+    <h2>A SUA LOJA DE PEÇAS!</h2>
+
+</section>
+<section class="section" id="categorias">
+    <h2 class="titulo">Categorias</h2>
+
+    <div class="categorias">
+        <a href="#pneus"><button>Pneus</button></a>
+        <a href="#oleos"><button>Óleos</button></a>
+        <a href="#cabos"><button>Cabos</button></a>
+        <a href="#transmissão"><button>Kit Transmissão</button></a>
+        <a href="#velas"><button>Velas</button></a>
+        </div>
+</section>
+
+<section class="section" id="pneus">
+    <h2 class="titulo">PNEUS</h2>
+
+    <div class="produtos">
+
+
+        <div class="produto" data-descricao="Excelente Acabamento;
+Alta durabilidade e vida útil;
+Encaixe Perfeito.">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_685715-MLB79807861220_102024-F.webp" />
+            <h3>Pastilha de Freio Dianteira CG 150 TITAN</h3>
+            <p>R$ 45,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="
+Tamanho: 120/80-18
+Tipo de montagem: Com câmara
+Quantidade de pneus: 1
+Posição: Traseira
+Índice de velocidade: S">
+            <img src="https://www.bartofil.com.br/media/catalog/product/1/1/117085_a.jpg?quality=80&bg-color=255,255,255&fit=bounds&height=700&width=700&canvas=700:700" />
+            <h3>Pneu 90/90-18 R34</h3>
+            <p>R$ 230,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="
+Tamanho: 90/90-18
+Tipo de montagem: Sem câmara
+Quantidade de pneus: 1
+Posição: Traseira
+Índice de velocidade: P">
+            <img src="https://tse2.mm.bing.net/th/id/OIP.UKVM7vWXFo9TaG7m8G8X2wAAAA" />
+            <h3>Pneu Levorin Matrix 90/90-18</h3>
+            <p>R$ 280,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="
+Tamanho: 80/100-18
+Tipo de montagem: Com câmara
+Quantidade de pneus: 1
+Posição: Dianteira
+Índice de velocidade: P
+
+">
+            <img src="https://tse2.mm.bing.net/th/id/OIP.D3kk3FBiDSf1fZ4YFWhilgHaHa" />
+            <h3>Pneu Levorin Matrix 80/100-18</h3>
+            <p>R$ 245,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="
+Tamanho: 90/90-18
+Tipo de montagem: Com câmara
+Quantidade de pneus: 1
+Posição: Traseira
+Índice de velocidade: P">
+            <img src="https://www.bartofil.com.br/media/catalog/product/1/1/117090_a.jpg?quality=80&bg-color=255,255,255&fit=bounds&height=300&width=240&canvas=240:300" />
+            <h3> PNEU RINALD 90/90-18 BS 32   </h3>
+            <p>R$230,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="
+Tamanho: 2.75-18
+Tipo de montagem: Com câmara
+Quantidade de pneus: 1
+Posição: Dianteira
+Índice de velocidade: P">
+            <img src="https://www.bartofil.com.br/media/catalog/product/1/1/117090_a.jpg?quality=80&bg-color=255,255,255&fit=bounds&height=300&width=240&canvas=240:300" />
+            <h3>PNEU RINALDI 2.75/18 BS 32 </h3>
+            <p>R$230,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="
+Tamanho: 110/90-17
+Tipo de montagem: Com câmara
+Posição: Traseira
+Quantidade de pneus: 1">
+            <img src="https://www.bartofil.com.br/media/catalog/product/1/1/118972_a.jpg?quality=80&bg-color=255,255,255&fit=bounds&height=300&width=240&canvas=240:300" />
+            <h3>PNEU RINALDI 110/90-17 RT-36 </h3>
+            <p>R$370,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="
+Tamanho: 90/90-19
+Tipo de montagem: Com câmara
+Posição: Dianteira
+Quantidade de pneus: 1">
+            <img src="https://www.bartofil.com.br/media/catalog/product/1/1/118971_a.jpg?quality=80&bg-color=255,255,255&fit=bounds&height=300&width=240&canvas=240:300" />
+            <h3>PNEU RINALDI 90/90-19 RT 36 </h3>
+            <p>R$300,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="
+Tamanho: 110/90-17
+Tipo de montagem: Com câmara
+Quantidade de pneus: 1
+Posição: Traseira
+Índice de velocidade: P">
+            <img src="https://www.bartofil.com.br/media/catalog/product/1/1/117104_a.jpg?quality=80&bg-color=255,255,255&fit=bounds&height=300&width=240&canvas=240:300" />
+            <h3>PNEU RINALDI 110/90-17 R34 </h3>
+            <p>R$400,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="
+Tamanho: 90/90-19
+Tipo de montagem: Com câmara
+Quantidade de pneus: 1
+Posição: Dianteira
+Índice de velocidade: T">
+            <img src="https://www.bartofil.com.br/media/catalog/product/1/1/117083_a.jpg?quality=80&bg-color=255,255,255&fit=bounds&height=300&width=240&canvas=240:300" />
+            <h3>PNEU RINALDI 90/90-19 R34 </h3>
+            <p>R$295,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+    </div>
+</section>
+
+<section class="section" id="oleos">
+    <h2 class="titulo">ÓLEOS</h2>
+
+    <div class="produtos">
+
+        <div class="produto" data-descricao="Verifique o manual do seu veículo, mas o Mobil 20W50 é um óleo robusto para motores mais antigos ou para quem busca proteção extra em motos de 4 tempos e carros com bastante uso. ">
+            <img src="https://paulinhomotos.fbitsstatic.net/img/p/oleo-mobil-4t-20w50-mineral-litro-86917/284373-2.jpg?w=565&h=565&v=no-change&qs=ignore" />
+            <h3>Óleo Mobil 20w50</h3>
+            <p>R$ 35,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="Sempre consulte o manual do proprietário da sua motocicleta para confirmar a viscosidade e as especificações exatas (API e JASO) que o fabricante recomenda para o seu modelo, pois existem variações como o Mobil Super Moto 4T MX (semissintético) e versões sintéticas, cada uma com indicações específicas.  ">
+            <img src="https://images.tcdn.com.br/img/img_prod/1213254/oleo_mobil_super_moto_10w30_semissintetico_1litro_689_1_4eef52bd9e230c183fc280d3e7d8b78b.jpg" />
+            <h3>Óleo Mobil 10w30</h3>
+            <p>R$ 45,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="
+         Índice de viscosidade
+20W-50
+Especificações da indústria
+API SL
+JASO MA2
+Aplicação (s)	Motocicleta (4 tempos)
+Tipo de lubrificante
+Mineral
+Marca
+PETRONAS Sprinta
+Faixa
+PETRONAS Sprinta F300">
+            <img src="https://cdn.pli-petronas.com/2022-05/Pack%20Sprinta%20F300%204T%2020W50%20-%201L.png?VersionId=H_1t2dvV_gX1APFGKpploM6euSRtehGx" />
+            <h3>Óleo Petronas 20w50</h3>
+            <p>R$ 35,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="Índice de viscosidade: 10W-30
+Especificações da indústria:API SL JASO MA2
+Aplicação (s) - para páginas de consumidores: Motocicleta (4 tempos)">
+            <img src="https://cdn.pli-petronas.com/styles/image_275x255/s3/2022-05/Pack%20Sprinta%20F500%204T%2010W30%20-%201L.png?VersionId=J8JMTIaKBBMlUgaQS1ZwWOUGD2Sf9vPM&itok=LmwMaEhh" />
+            <h3>Óleo Petronas 10w30</h3>
+            <p>R$ 45,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+    </div>
+</section>
+
+<section class="section" id="embreagem">
+    <h2 class="titulo">KIT EMBREAGEM</h2>
+
+    <div class="produtos">
+
+        <div class="produto" data-descricao="APLICAÇÃO:
+Honda
+CG-125
+CG-150
+NXR-150 Bros
+Ano de Aplicação:
+NXR-150 Bros
+CG-125 a partir de 2009
+Um kit de embreagem completo oferece todos os componentes necessários para uma substituição ou atualização eficiente, incluindo discos, molas e, muitas vezes, o cubo da embreagem. O nosso já vem pré-oleado, facilitando a manutenção e garante uma performance consistente e confiável do sistema de embreagem, melhorando a experiência de condução.">
+        <img src="https://http2.mlstatic.com/D_NQ_NP_2X_890847-MLB87788731562_072025-F.webp" />
+        <h3>KIT EMBREAGEM TITAN 125/150 WGK </h3>
+        <p>R$ 220,00 </p>
+        <button onclick="abrirModal(this)">Ver detalhes</button>
+    </div>
+        <div class="produto" data-descricao="APLICAÇÃO:
+Yamaha
+YBR-125
+Ano de Aplicação:
+YBR-125 a partir de 2017
+Um kit de embreagem completo oferece todos os componentes necessários para uma substituição ou atualização eficiente, incluindo discos, molas e, muitas vezes, o cubo da embreagem. O nosso já vem pré-oleado, facilitando a manutenção e garante uma performance consistente e confiável do sistema de embreagem, melhorando a experiência de condução.">
+        <img src="https://http2.mlstatic.com/D_NQ_NP_2X_890847-MLB87788731562_072025-F.webp" />
+        <h3>KIT EMBREAGEM YBR 125 WGK  </h3>
+        <p>R$ 220,00 </p>
+        <button onclick="abrirModal(this)">Ver detalhes</button>
+    </div>
+        <div class="produto" data-descricao="APLICAÇÃO:
+Honda
+CG-160
+NXR-160 Bros
+Um kit de embreagem completo oferece todos os componentes necessários para uma substituição ou atualização eficiente, incluindo discos, molas e, muitas vezes, o cubo da embreagem. O nosso já vem pré-oleado, facilitando a manutenção e garante uma performance consistente e confiável do sistema de embreagem, melhorando a experiência de condução.">
+        <img src="https://http2.mlstatic.com/D_NQ_NP_2X_890847-MLB87788731562_072025-F.webp" />
+        <h3>KIT EMBREAGEM TITAN 160 3MOLAS WGK  </h3>
+        <p>R$ 220,00 </p>
+        <button onclick="abrirModal(this)">Ver detalhes</button>
+    </div>
+        <div class="produto" data-descricao="APLICAÇÃO:
+Honda
+CG-125
+CG-150
+CG-160
+NXR-150 Bros
+NXR-160 Bros
+XRE-190
+Ano de Aplicação:
+CG-125 a partir de 2009, NXR-150 BROS a partir de 2006
+Um kit de embreagem completo oferece todos os componentes necessários para uma substituição ou atualização eficiente, incluindo discos, molas e, muitas vezes, o cubo da embreagem. O nosso já vem pré-oleado, facilitando a manutenção e garante uma performance consistente e confiável do sistema de embreagem, melhorando a experiência de condução.">
+        <img src="https://http2.mlstatic.com/D_NQ_NP_2X_799514-MLB98197001316_112025-F.webp" />
+        <h3>KIT EMBREAGEM COMPETIÇÃO 150 6MOLAS WGK  </h3>
+        <p>R$ 250,00 </p>
+        <button onclick="abrirModal(this)">Ver detalhes</button>
+    </div>
+        <div class="produto" data-descricao="Especificações:
+Kit com 6 discos largos sintetizados
+Marca: WW3
+Excelente resistência ao calor
+Maior vida útil comparado aos modelos convencionais
+Troca simples e rápida
+
+Indicado para quem busca confiabilidade, melhor aderência e desempenho superior na embreagem.">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_914610-MLB76396074429_052024-F-disco-embreagem-crf230cg150160-6d-largos-sintetizados-ww3.webp" />
+            <h3>DISCO DE EMBREAGEM 125/150/160 WW3</h3>
+            <p>R$ 65,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="APLICAÇÃO:
+Honda
+CG-125
+CG-150
+CG-160
+NXR-125 Bros
+NXR-150 Bros
+XRE-190
+Ano de Aplicação:
+CG-125 até 2008
+Bros
+CG-125 a partir de 2009
+Os discos da embreagem são cruciais para a transmissão de potência do motor para a caixa de câmbio. Nossos discos apresentam alta qualidade proporcionam um acoplamento mais eficaz e uma melhor dissipação de calor. Uma embreagem responsiva e durável melhora a experiência de condução e reduz a frequência de substituição de peças, oferecendo uma maior economia a longo prazo.">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_764675-MLB90272426710_082025-F.webp" />
+            <h3>DISCO DE EMBREAGEM 125/150/160 WGK</h3>
+            <p>R$ 70,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="APLICAÇÃO:
+Yamaha
+XTZ-125
+YBR-125
+YBR-125 Factor
+Ano de Aplicação:
+YBR-125 até 2016
+Os discos da embreagem são cruciais para a transmissão de potência do motor para a caixa de câmbio. Nossos discos apresentam alta qualidade proporcionam um acoplamento mais eficaz e uma melhor dissipação de calor. Uma embreagem responsiva e durável melhora a experiência de condução e reduz a frequência de substituição de peças, oferecendo uma maior economia a longo prazo.">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_764675-MLB90272426710_082025-F.webp" />
+            <h3>DISCO DE EMBREAGEM YBR 125 WGK </h3>
+            <p>R$ 70,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+
+
+    </div>
+</section>
+
+<section class="section" id="carburador">
+    <h2 class="titulo">CARBURADOR</h2>
+
+    <div class="produtos">
+        <div class="produto" data-descricao="Especificações técnicas:
+- Marca: SMARTFOX MOD.ORIGINAL
+- Modelo: CG Titan 150 (2004 a 2008)
+- Tipo: Carburador completo
+- Origem: Brasil
+
+Conteúdo da embalagem:
+- 1 Carburador completo
+
+Garantia:
+- 90 dias contra defeitos de fabricação">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_603330-MLB101410642636_122025-F.webp" />
+            <h3>CARBURADOR TITAN 150 04-08</h3>
+            <p>R$240,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="CARBURADOR COMPLETO SMARTFOX
+MODELOS
+TITAN 125 2002-2004
+FAN 125 2005-2008
+PRODUTO NOVO COM NOTA FISCAL
+Garantia do vendedor: 3 meses
+
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_906952-MLB101412511852_122025-F.webp" />
+            <h3>CARBURADOR TITAN 125 02-04</h3>
+            <p>R$240,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="CARBURADOR COMPLETO SMARTFOX
+
+MODELOS
+CG 125 76-88
+TODAY 125 89-94
+TITAN 125 95-99
+TITAN 125 KS-ES 00-01
+C/ ECCO
+Garantia do vendedor: 3 meses">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_791235-MLB72219874108_102023-F.webp" />
+            <h3>CARBURADOR TITAN 125 83-01 C/ ECCO</h3>
+            <p>R$245,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="CARBURADOR COMPLETO SMARTFOX
+MODELOS
+HONDA NX4 FALCON 400 1999-2008
+Garantia do vendedor: 3 meses
+
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_923887-MLB101986677469_122025-F.webp" />
+            <h3>CARBURADOR NX400 FALCON 99-08</h3>
+            <p>R$380,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+
+        <div class="produto" data-descricao="CARBURADOR COMPLETO SMARTFOX
+MODELOS
+HONDA CBX TWISTER 250 - 2001 A 2008
+Garantia do vendedor: 3 meses
+
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_891687-MLB99033993782_112025-F.webp" />
+            <h3>CARBURADOR CBX 250 01-08</h3>
+            <p>R$450,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+
+        <div class="produto" data-descricao="CARBURADOR COMPLETO
+
+MODELO: YBR FACTOR 125
+2000 2001 2002 2003 2004 2005 2006 2007 2008
+MARCA: SMARTFOX
+Garantia do vendedor: 3 meses
+
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_970109-MLB95475420575_102025-F.webp" />
+            <h3>CARBURADOR YBR 00-08</h3>
+            <p>R$200,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="INFORMAÇÕES DO PRODUTO
+
+Marca: SMARTFOX
+Modelo Compatível: Moto Honda Biz 100 1998 A 2005
+Ano de Fabricação da moto: 1998 à 2005
+Conteúdo da Embalagem: 1 Carburador Moto Honda Biz 100 ano 1998 à 2005 Modelo Completo
+Garantia: Garantia legal de 90 dias">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_921828-MLB94260340654_102025-F.webp" />
+            <h3>CARBURADOR BIZ 100</h3>
+            <p>R$250,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+
+
+
+
+    </div>
+</section>
+
+<section class="section" id="iluminação">
+    <h2 class="titulo">ILUMINAÇÃO</h2>
+
+    <div class="produtos">
+        <div class="produto" data-descricao="Compatibilidade:
+
+• CB 250F Twister (2016-2022)
+• CG Titan/Fan 150 (2014-2015)
+• CG Titan/Fan/Start 160 (2016-2024).
+Características:
+• Lente cristal e LEDs de alto brilho para maior visibilidade e segurança.
+• Encaixe por coxim, sem adaptações.
+• LEDs de baixo consumo e alta potência.
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_771126-MLB82442424969_022025-F-kit-4-pisca-seta-de-led-cb250-twister-cg-titan-fan-start-160.webp" />
+            <h3>KIT PISCA LED STTALION 2PÇS
+            TITAN 160/FAN 160/START160</h3>
+            <p>R$ 100,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="Modelos compatíveis:
+• Modelo universal para motos com encaixe por rosca.
+• CBX 250 TWISTER. (2001 a 2008)
+• CB 300. (2009 a 2015)
+• XRE 300.
+• XRE 190.
+• TITAN 125 - 150. Somente até 2013
+• FAN 125 - 150. Somente até 2013
+• NXR Bros 125 - 150 - 160.
+• XR 250 TORNADO.
+• CBX 200.
+• YES 125 - 150.
+• SPEED 150
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_943611-MLB82843981048_032025-F-kit-4-piscas-seta-twister-titan-fan-125-150-xre-cb-300-bros.webp" />
+            <h3>Kit Pisca Led Stallion 2PÇS
+                CG 125/150 e YBR</h3>
+            <p>R$ 80,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="Compatível com:
+Titan 150                   2004 A 2013
+Fan 125                   2009 A 2013
+Titan/Fan 125          Todas
+CG 125                    2000 A 2008
+Fan 125                   2005 A 2013
+Fan 150                   2010 A 2013
+Cbx 250 Twister       2000 A 2008
+Cb 300                     2009 A 2015
+XRE 300                    2010 A 2015
+Especificações Técnicas:
+- Pisca completo com coxim e chicote;
+- Tipo de lâmpada: Base metalica
+- Alta resistência e durabilidade
+- Carcaça em plástico resistente
+- Ótima qualidade e acabamento
+- Não acompanha lâmpada">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_761026-MLB80924860602_122024-F.webp" />
+            <h3>Pisca Titan 125/150 DIANT.ESQ </h3>
+            <p>R$ 20,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="Compatível com:
+Titan 150                   2004 A 2013
+Fan 125                   2009 A 2013
+Titan/Fan 125          Todas
+CG 125                    2000 A 2008
+Fan 125                   2005 A 2013
+Fan 150                   2010 A 2013
+Cbx 250 Twister       2000 A 2008
+Cb 300                     2009 A 2015
+XRE 300                    2010 A 2015
+Especificações Técnicas:
+- Pisca completo com coxim e chicote;
+- Tipo de lâmpada: Base metalica
+- Alta resistência e durabilidade
+- Carcaça em plástico resistente
+- Ótima qualidade e acabamento
+- Não acompanha lâmpada">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_761026-MLB80924860602_122024-F.webp" />
+            <h3>Pisca Titan 125/150 DIANT.DIR </h3>
+            <p>R$ 20,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="Modelos compatíveis:
+• Titan 125 – 2014 em diante
+• Titan 150 – 2014 em diante
+• Titan 160 – 2014 em diante
+• Fan 125 – 2014 em diante
+• Fan 150 – 2014 em diante
+• Fan 160 – 2014 em diante
+• Start 125 – 2014 em diante
+• Start 150 – 2014 em diante
+• Start 160 – 2014 em diante
+Cor da lente: Cristal
+Compatibilidade: 12V">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_600998-MLB84819597433_052025-F.webp" />
+            <h3>Pisca TITAN 2014 EM DIANTE / DIANT.DIR </h3>
+            <p>R$ 30,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="Modelos compatíveis:
+• Titan 125 – 2014 em diante
+• Titan 150 – 2014 em diante
+• Titan 160 – 2014 em diante
+• Fan 125 – 2014 em diante
+• Fan 150 – 2014 em diante
+• Fan 160 – 2014 em diante
+• Start 125 – 2014 em diante
+• Start 150 – 2014 em diante
+• Start 160 – 2014 em diante
+Cor da lente: Cristal
+Compatibilidade: 12V">">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_600998-MLB84819597433_052025-F.webp" />
+            <h3>Pisca TITAN 2014 EM DIANTE / DIANT.ESQ </h3>
+            <p>R$ 30,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="Especificação:
+Acabamento perfeito;
+Material resistente;
+Carcaça reforçada;
+Lente reforçada;
+Com chicote para instalação.
+Aplicação:
+Nxr Bros 125 2003 A 2005;
+Nxr Bros 150 2003 A 2008.
+NÃO POSSUEM LADO!
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_887666-MLB70556921469_072023-F-4-pisca-seta-xr-200-xlr-125-bros-125150-pop-100-tornado-250.webp" />
+            <h3>Pisca Nxr Bros 125/150 </h3>
+            <p>R$ 20,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="Compatível com as seguintes motos:
+Twister CBX 250 2001 a 2008
+CG Titan 125 2000 a 2004
+CG Fan 125 2005 a 2013
+CG Titan 150 2004 a 2008
+Produto idêntico ao original, não há necessidade de adaptações.
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_632494-MLB101986677797_122025-F.webp" />
+            <h3>Pisca Nxr Bros 2014 DIANT.ESQ </h3>
+            <p>R$ 30,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="Compatível com as seguintes motos:
+Twister CBX 250 2001 a 2008
+CG Titan 125 2000 a 2004
+CG Fan 125 2005 a 2013
+CG Titan 150 2004 a 2008
+Produto idêntico ao original, não há necessidade de adaptações.">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_632494-MLB101986677797_122025-F.webp" />
+            <h3>Pisca Nxr Bros 2014 DIANT.DIREITA </h3>
+            <p>R$ 30,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+</div>
+</section>
+
+
+<section class="section" id="PARALAMA">
+    <h2 class="titulo">PARALAMAS</h2>
+
+    <div class="produtos">
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_770811-MLB90637132182_082025-F-paralama-dianteiro-cg-125-titan-0004-fan-125-0508-cores.webp"/>
+            <h3>PARALAMA CG 125 00-01 VERDE MARAJÓ </h3>
+            <p>R$45,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_806717-MLB90637132280_082025-F-paralama-dianteiro-cg-125-titan-0004-fan-125-0508-cores.webp" />
+            <h3>PARALAMA CG 125 00-04 VERMELHO</h3>
+            <p>R$45,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_757715-MLB90637132242_082025-F-paralama-dianteiro-cg-125-titan-0004-fan-125-0508-cores.webp" />
+            <h3>PARALAMA CG 125 02 AZUL</h3>
+            <p>R$45,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_747267-MLB90637132224_082025-F-paralama-dianteiro-cg-125-titan-0004-fan-125-0508-cores.webp" />
+            <h3>PARALAMA CG 125 02-03 VERDE METALICO</h3>
+            <p>R$40,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_806717-MLB90637132280_082025-F-paralama-dianteiro-cg-125-titan-0004-fan-125-0508-cores.webp" />
+            <h3>PARALAMA CG 125 02-03 VERM.SAPUCAÍ</h3>
+            <p>R$40,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_678457-MLB90637132146_082025-F-paralama-dianteiro-cg-125-titan-0004-fan-125-0508-cores.webp" />
+            <h3>PARALAMA CG 125 02-03 PRATA IBIÚNA </h3>
+            <p>R$50,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_718487-MLB94061287927_102025-F-paralama-honda-cg-titan-150-job-titan-150-2004-a-2008.webp" />
+            <h3>PARALAMA CG 150 TITAN 04 AZUL TWISTER </h3>
+            <p>R$65,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_949416-MLB87785167138_072025-F-paralama-honda-cg-titan-150-job-titan-150-2004-a-2008.webp" />
+            <h3>PARALAMA CG 150 TITAN 04 VERMELHO </h3>
+            <p>R$65,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_744776-MLB87785167228_072025-F-paralama-honda-cg-titan-150-job-titan-150-2004-a-2008.webp" />
+            <h3>PARALAMA CG 150 TITAN 04-08 PRETO PINTADO </h3>
+            <p>R$60,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_685647-MLB87785167120_072025-F-paralama-honda-cg-titan-150-job-titan-150-2004-a-2008.webp" />
+            <h3>PARALAMA CG 150 TITAN 06-07 PTA.FORCE</h3>
+            <p>R$60,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_819147-MLB93638332894_102025-F-paralama-honda-cg-titan-150-job-titan-150-2004-a-2008.webp" />
+            <h3>PARALAMA CG 150 TITAN 04 VERDE PANTANAL  </h3>
+            <p>R$70,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_950600-MLB94061635089_102025-F-paralama-honda-cg-titan-150-job-titan-150-2004-a-2008.webp" />
+            <h3>PARALAMA CG 150 TITAN 07-08 VERMELHO GUARAU </h3>
+            <p>R$55,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_863453-MLB90170521660_082025-F-paralama-traseiro-cg-titan-150-2004-2005-2006-2007-2008.webp" />
+            <h3>PARALAMA TRAS. CG 150 04-08</h3>
+            <p>R$65,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_886348-MLB75978260065_042024-F-paralama-traseiro-suporte-placa-cg-titan-fan-125-2000-2008.webp" />
+            <h3>PARALAMA TRAS. CG TITAN/FAN 125 00-08</h3>
+            <p>R$80,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_732249-MLB84094283208_052025-F-paralama-suporte-placa-rabeta-fan-start-160150125-201423.webp" />
+            <h3>PARALAMA TRAS. FAN/START 14/24 (A)</h3>
+            <p>R$90,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_995946-MLB53199980772_012023-F-paralama-traseiro-cg-titan-160-ano-2016-a-2022.webp" />
+            <h3>PARALAMA TRAS. TITAN 160 16-24 (A)</h3>
+            <p>R$85,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="complementos">
+    <h2 class="titulo"> COMPLEMENTOS TRANSMISSÃO</h2>
+
+    <div class="produtos">
+
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_819365-MLB82330026582_022025-F-pinhao-15-dentes-cg-titan-125-150-160-bros-125-150-xre-190.webp" />
+            <h3>PINHÃO CG 150 13D </h3>
+            <p>R$ 25,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_819365-MLB82330026582_022025-F-pinhao-15-dentes-cg-titan-125-150-160-bros-125-150-xre-190.webp" />
+            <h3>PINHÃO CG 150 14D </h3>
+            <p>R$ 25,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_819365-MLB82330026582_022025-F-pinhao-15-dentes-cg-titan-125-150-160-bros-125-150-xre-190.webp" />
+            <h3>PINHÃO CG 150 15D </h3>
+            <p>R$ 25,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_819365-MLB82330026582_022025-F-pinhao-15-dentes-cg-titan-125-150-160-bros-125-150-xre-190.webp" />
+            <h3>PINHÃO CG 150 16D </h3>
+            <p>R$ 25,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_819365-MLB82330026582_022025-F-pinhao-15-dentes-cg-titan-125-150-160-bros-125-150-xre-190.webp" />
+            <h3>PINHÃO CG 150 17D </h3>
+            <p>R$ 25,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_819365-MLB82330026582_022025-F-pinhao-15-dentes-cg-titan-125-150-160-bros-125-150-xre-190.webp" />
+            <h3>PINHÃO FAN 125 14D </h3>
+            <p>R$ 25,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_762118-MLB92454169148_092025-F.webp" />
+            <h3>PINHÃO NX400 FALCON 15D  </h3>
+            <p>R$ 60,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_899945-MLB73309786331_122023-F.webp" />
+            <h3>PINHÃO XTZ 250 LANDER 13D  </h3>
+            <p>R$ 55,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_814621-MLB51652447807_092022-O-corrente-transmisso-cg-150-titanfan-40530-kvs-902-original.webp" />
+            <h3>CORRENTE TRANSMISSÃO CG 150 428H/118ELOS</h3>
+            <p>R$00,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_814621-MLB51652447807_092022-O-corrente-transmisso-cg-150-titanfan-40530-kvs-902-original.webp" />
+            <h3>CORRENTE TRANSMISSÃO CG 125 99/08 428H/116ELOS </h3>
+            <p>R$00,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_814621-MLB51652447807_092022-O-corrente-transmisso-cg-150-titanfan-40530-kvs-902-original.webp" />
+            <h3> CORRENTE TRANSMISSÃO 428H/118ELOS C/ RETENTOR </h3>
+            <p>R$135,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+
+
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_814621-MLB51652447807_092022-O-corrente-transmisso-cg-150-titanfan-40530-kvs-902-original.webp" />
+            <h3>CORRENTE TRANSMISSÃO NXR 150 428H/130ELOS </h3>
+            <p>R$60,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_814621-MLB51652447807_092022-O-corrente-transmisso-cg-150-titanfan-40530-kvs-902-original.webp" />
+            <h3>CORRENTE TRANSMISSÃO CB300/CRF230 520H+110L</h3>
+            <p>R$85,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_814621-MLB51652447807_092022-O-corrente-transmisso-cg-150-titanfan-40530-kvs-902-original.webp" />
+            <h3>CORRENTE TRANSMISSÃO CB300/CRF230 520H+110L C/ RETENTOR </h3>
+            <p>R$200,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://down-br.img.susercontent.com/file/br-11134207-7r98o-m5ynezu1ok1xe7" />
+            <h3>EMENDA CORRENTE 428H C/ RETENTOR</h3>
+            <p>R$18,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_771977-MLB73508377762_122023-O.webp" />
+            <h3>EMENDA CORRENTE 428H</h3>
+            <p>R$6,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_771977-MLB73508377762_122023-O.webp" />
+            <h3>EMENDA CORRENTE 520H</h3>
+            <p>R$9,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://down-br.img.susercontent.com/file/br-11134207-7r98o-m5ynezu1ok1xe7" />
+            <h3>EMENDA CORRENTE 520H C/ RETENTOR</h3>
+            <p>R$20,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="transmissão">
+    <h2 class="titulo"> KIT´s TRANSMISSÃO</h2>
+
+    <div class="produtos">
+
+        <div class="produto" data-descricao="Descrição
+KIT RELAÇÃO COMPLETO AÇO 1045 CG TITAN FAN 125 2000 A 2008 (COROA/PINHAO E CORRENTE)
+NOVO NA CAIXA MARCA - SMARTFOX
+COMPATIVEL COM:
+MOTOS:
+• CG TITAN FAN 125
+• ANO: 2000 2001 2002 2003 2004 2005 2006 2007 2008.
+• AÇO 1045
+• CORRENTE 428HX116L
+• 44 DENTES DA COROA
+• 14 DENTES DO PINHÃO">
+        <img src="https://http2.mlstatic.com/D_NQ_NP_2X_912639-MLB90656036100_082025-F.webp" />
+        <h3>KIT TRANSMISSÃO CG 125/2000 </h3>
+        <p>R$ 120,00</p>
+        <button onclick="abrirModal(this)">Ver detalhes</button>
+    </div>
+        <div class="produto" data-descricao="Descrição
+KIT RELAÇÃO COMPLETO AÇO 1045 CG TITAN FAN 150 2004 A 2014 (COROA/PINHAO E CORRENTE )
+NOVO NA CAIXA MARCA- SMARTFOX
+COMPATIVEL COM:
+MOTOS:
+• CG TITAN FAN 150- TODAS
+• ANO: 2004 A 2014
+• AÇO 1045
+• CORRENTE 428HX118L (COM RETENTOR)
+• 43 DENTES DA COROA
+• 16 DENTES DO PINHÃO
+">
+        <img src="https://http2.mlstatic.com/D_NQ_NP_2X_912639-MLB90656036100_082025-F.webp" />
+        <h3>KIT TRANSMISSÃO CG 150 TIT/FAN </h3>
+        <p>R$ 120,00</p>
+        <button onclick="abrirModal(this)">Ver detalhes</button>
+    </div>
+        <div class="produto" data-descricao="KIT RELAÇÃO COMPLETO AÇO 1045 CG TITAN FAN 160 (COROA/PINHAO E CORRENTE)
+
+NOVO NA CAIXA MARCA - SMARTFOX
+COMPATIVEL COM:
+MOTOS:
+• CG TITAN FAN 160 (CARGO / SDI / START) - TODAS
+• ANO: 2014 A 2025
+• AÇO 1045
+• CORRENTE 428HX118L
+• 44 DENTES DA COROA
+• 15 DENTES DO PINHÃO
+">
+        <img src="https://http2.mlstatic.com/D_NQ_NP_2X_912639-MLB90656036100_082025-F.webp" />
+        <h3>KIT TRANSMISSÃO CG 160 TIT/FAN/START </h3>
+        <p>R$ 120,00</p>
+        <button onclick="abrirModal(this)">Ver detalhes</button>
+    </div>
+        <div class="produto" data-descricao="APLICAÇÃO:
+HONDA / CG 125 CARGO / 2009 a 2013
+HONDA / CG 125 FAN ES / 2009 a 2013
+HONDA / CG 125 FAN KS / 2009 a 2013
+CARACTERÍSTICAS
+- Código Fabricante: 91048
+- Aplicação: Transmissão
+- Aço 1045
+- Corrente 428HX116L
+- 43 dentes da coroa
+- 14 dentes do pinhão">
+        <img src="https://http2.mlstatic.com/D_NQ_NP_2X_912639-MLB90656036100_082025-F.webp" />
+        <h3>KIT TRANSMISSÃO CG FAN 125 2009/13 </h3>
+        <p>R$ 120,00</p>
+        <button onclick="abrirModal(this)">Ver detalhes</button>
+    </div>
+        <div class="produto" data-descricao="Aplicação:
+
+CG 125 – 1983 a 1991
+Titan 125 – 1995 a 1999
+Cargo 125 – 1995 a 1999
+Today 125 – 1988 a 1992
+Turuna – Modelos até 1999
+">
+        <img src="https://http2.mlstatic.com/D_NQ_NP_2X_912639-MLB90656036100_082025-F.webp" />
+        <h3>KIT TRANSMISSÃO CG TITAN 99 </h3>
+        <p>R$ 120,00</p>
+        <button onclick="abrirModal(this)">Ver detalhes</button>
+    </div>
+        <div class="produto" data-descricao="VEÍCULO COMPATÍVEL:
+XRE 300 TODOS OS ANOS 2009 A 2023
+Acompanha:
+-Coroa 39T
+-Pinhão 13T
+-Corrente 520HX104L
+">
+        <img src="https://http2.mlstatic.com/D_NQ_NP_2X_862915-MLB91961637408_092025-F.webp" />
+        <h3>KIT TRANSMISSÃO XRE 300 09/18 </h3>
+        <p>R$ 200,00</p>
+        <button onclick="abrirModal(this)">Ver detalhes</button>
+    </div>
+        <div class="produto" data-descricao="KIT RELAÇÃO COMPLETO (COROA/PINHÃO/CORRENTE) - AÇO 1045 - SMARTFOX
+PRINCIPAIS APLICAÇÕES:
+CB 300 / CB 300R - 2009 2010 2011 2012 2013 2014 2015
+COMPONENTES:
+1 PINHÃO 13 DENTES
+1 COROA 37 DENTES
+1 CORRENTE 520H110L">
+        <img src="https://http2.mlstatic.com/D_NQ_NP_2X_674109-MLB93655580508_102025-F.webp" />
+        <h3>KIT TRANSMISSÃO CB 300 09/15 </h3>
+        <p>R$ 180,00</p>
+        <button onclick="abrirModal(this)">Ver detalhes</button>
+    </div>
+
+        <div class="produto" data-descricao="APLICAÇÃO:
+- HONDA XR 250 TORNADO
+Anos 2001 2002 2003 2004 2005 2006 2007 2008
+COMPONENTES:
+• 1 Corrente Transmissão com Retentor e Emenda Rebite 520H x 104L;
+• 1 Coroa 38 dentes;
+• 1 Pinhão 13 dentes;">
+        <img src="https://http2.mlstatic.com/D_NQ_NP_2X_802347-MLB88298246046_072025-F.webp" />
+        <h3>KIT TRANSMISSÃO XR250 </h3>
+        <p>R$ 180,00</p>
+        <button onclick="abrirModal(this)">Ver detalhes</button>
+    </div>
+
+        <div class="produto" data-descricao="APLICAÇÃO:
+- Honda CBX 250 TWISTER
+Anos: 2001 2002 2003 2004 2005 2006 2007 2008
+COMPONENTES:
+• 1 Corrente Transmissão Com Emenda Clip 520H x 106L;
+• 1 Coroa 37 dentes;
+• 1 Pinhão 13 dentes.
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_914101-MLB93963923871_102025-F.webp" />
+            <h3>KIT TRANSMISSÃO CBX250 05-08 </h3>
+            <p>R$ 170,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="APLICAÇÃO:
+HONDA / NRX 150 BROS 160 / TODAS
+HONDA / XRE 190 / TODAS
+CARACTERÍSTICAS
+- Aço 1045
+- Corrente 428HX128L – COM RETENTOR
+- 48 dentes da coroa
+- 16 dentes do pinhão">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_825693-MLB87980538223_072025-F.webp" />
+            <h3> KIT TRANSMISSÃO NXR 160 BROS C/RETENTOR </h3>
+            <p>R$180,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="PRINCIPAIS APLICAÇÕES:
+MOTOS: HONDA NXR BROS 150
+ANO: 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015
+*Aço 1045
+*Corrente 428HX130L
+*50 dentes da coroa
+*17 dentes do pinhão">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_672172-MLB81858277126_012025-F.webp" />
+            <h3> KIT TRANSMISSÃO NXR 150 BROS</h3>
+            <p>R$160,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="Indicação de Uso:
+Honda Nxr 125 Bros 2003 2004 2005
+Descrição Técnica:
+Item: Kit Relação (Coroa + Pinhão + Corrente);
+Número de Dentes da Coroa: 54;
+Número de Dentes do Pinhão: 17;
+Medida da Corrente: 428 x 132;
+Fabricante: X ;" >
+
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_672172-MLB81858277126_012025-F.webp" />
+            <h3>KIT TRANSMISSÃO NXR 125 BROS</h3>
+            <p>R$160,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="Marca: Smart Fox
+Aplicação: Yamaha XTZ 250 Lander / Ténéré — 2006 a 2015
+Coroa: 46 dentes
+Pinhão: 15 dentes
+Corrente: 428H – 130 elos (130L)
+Material: Aço carbono 1045 tratado termicamente
+Garantia: 3 meses contra defeitos de fabricação">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_930580-MLB87314267586_072025-F.webp" />
+            <h3>KIT TRANSMISSÃO XTZ LANDER 250 09-25 </h3>
+            <p>R$ 160,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="
+KIT CONTÉM:
+1 - COROA 46 DENTES AÇO
+1 - PINHÃO: 15 DENTES AÇO
+1 - CORRENTE DE TRANSMISSÃO COM RETENTOR: 428H-130L
+-Compatível XTZ Lander / Tenere 250
+-Compatível do ano 2006 2007 2008 (medidas originais)
+-Também compatível com os modelos 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021 2022 2023
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_700714-MLB93590522032_102025-F.webp" />
+            <h3>KIT TRANSMISSÃO XTZ LANDER 250 00-08 </h3>
+            <p>R$ 160,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="- Kit Relação Fazer 250 Com Retentor Original Aço 1045 2005 á 2017
+ESPECIFICAÇÕES TÉCNICAS:
+- Coroa: 45Z Dentes
+- Pinhão: 15Z Dentes
+- Corrente com retentor: 428H X 132L
+- Aço 1045 temperado
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_984158-MLB82292743907_022025-F.webp" />
+            <h3>KIT TRANSMISSÃO FAZER 250 05-17 </h3>
+            <p>R$ 160,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="APLICAÇÃO MOTOS:
+YBR 125 E 2008 2007 2006 2005 2004 2003
+YBR 125 ED 2008 2007 2006 2005 2004 2003
+YBR 125 FACTOR E 2016 2015 2014 2013 2012 2011 2010 2009
+YBR 125 FACTOR ED/FACTOR EDITION 2016 2015 2014 2013 2012 2011 2010 2009
+YBR 125 FACTOR K/ FACTOR K1 2016 2015 2014 2013 2012 2011 2010 2009
+YBR 125 FACTOR PRO E 2014
+YBR 125 FACTOR PRO K 2014
+YBR 125 K 2008 2007 2006 2005 2004 2003
+Quantidade de dentes da coroa: 45
+Quantidade de dentes do pinhão: 14
+Quantidade de ligações da corrente: 118
+Tempo de garantia: 3 meses">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_800954-MLB93655482208_102025-F.webp" />
+            <h3>KIT TRANSMISSÃO YBR FACTOR 09/14 </h3>
+                <p>R$ 150,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="APLICAÇÃO:
+-YBR Factor 125
+Anos 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016
+COMPONENTES:
+• 1 Corrente Transmissão 428H x 118L;
+• 1 Coroa 45 dentes;
+• 1 Pinhão 14 dentes.">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_661230-MLB93965139919_102025-F.webp" />
+            <h3>KIT TRANSMISSÃO YBR 125 00-08/ </h3>
+                <p>R$ 120,00</p>
+                <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+
+    </div>
+</section>
+
+
+<section class="section" id="TRANSMISSÃO">
+    <h2 class="titulo">BUCHAS</h2>
+
+    <div class="produtos">
+
+        <div class="produto" data-descricao="Compatibilidade
+Honda CG 150 Titan / Fan – 2004 até 2015
+Honda CG 160 Titan / Fan / Start – 2016 até 2025
+(Compatível com todas as versões e variações dentro dos anos citados)
+Código Original (OEM)
+41241-KRM-860 – Referência oficial Honda
+Especificações Técnicas
+Marca: Honda
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_982420-MLB83184367078_042025-F.webp" />
+            <h3>COXIM COROA 150/160 HONDA </h3>
+            <p>R$ 75,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="Compatibilidade
+Honda CG 150 Titan / Fan – 2004 até 2015
+Honda CG 160 Titan / Fan / Start – 2016 até 2025
+(Compatível com todas as versões e variações dentro dos anos citados)
+Especificações Técnicas
+Marca: SMARTFOX
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_800182-MLB102135907638_122025-F.webp" />
+            <h3>COXIM COROA 150/160 SMARTFOX </h3>
+            <p>R$ 35,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="Bucha Coxim da Coroa Kit com 4 Coxins Original Honda
+Código Honda: 41241-KPF-900
+Aplicações:
+CBX 250 TWISTER – 2001 a 2008
+CB300R – 2010 a 2015">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_906211-MLB75985047251_042024-F.webp" />
+            <h3>COXIM COROA HONDA CBX250/CB 250F/CB 300 </h3>
+            <p>R$ 60,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="Bucha Coxim da Coroa Kit
+Aplicações:
+CBX 250 TWISTER – 2001 a 2008
+CB300R – 2010 a 2015">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_786779-MLB76714753845_052024-F.webp" />
+            <h3>COXIM COROA SMARTFOX CBX250/CB 250F/CB 300 </h3>
+            <p>R$ 60,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="
+Produto compatível com a aplicação: Honda
+NX400 Falcon 1999 a 2008
+NX400 Falcon 2013 a 2015
+XR250 Tornado 2001 a 2008
+XR300 Tornado 2024 em diante
+XRE300 2010 a 2023
+XRE300 Sahara 2024 em diante
+XL700 Transalp 2011 a 2014
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_692325-MLB88811689848_082025-F.webp" />
+            <h3>COXIM COROA SMARTFOX XRE 300 </h3>
+            <p>R$ 50,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="BUCHA COROA FERRO (PACOTE C/ 4 PEÇAS)
+
+Aplicação:
+CG 125
+TITAN 125
+TODAY
+TURUNA
+ML
+Jogo com 4 peças">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_943031-MLB73715053400_012024-F-bucha-coxim-coroa-ferro-cg-ml-turuna-titan-125-kit-4-pecas.webp" />
+            <h3>BUCHA COROA TITAN 125 FERRO </h3>
+            <p>R$ 25,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="BUCHA COROA NYLON (PACOTE C/ 4 PEÇAS)
+
+Aplicação:
+CG 125
+TITAN 125
+TODAY
+TURUNA
+ML
+Jogo com 4 peças">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_733660-MLB90051827084_082025-F-bucha-coroa-nylon-roda-honda-cg-fan-titan-125-1983-ate-2008.webp" />
+            <h3>BUCHA COROA TITAN 125 NYLON </h3>
+            <p>R$ 15,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="BUCHA DO GARFO TRASEIRO
+        MARCA: DANIDREA
+        APLICAÇÃO: - TITAN 125 / 150 / 160 TODAS - TODAY - CARGO 125 - CBX 200S">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_720584-MLB71126116875_082023-F.webp" />
+            <h3>BUCHA BALANÇA TITAN 125/150/160 DANIDREA </h3>
+            <p>R$ 35,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="Kit Bucha da Balança
+Marca: Danidrea
+Aplicação:
+Compatível com YAMAHA YBR125 2000 A 2001.
+Compatível com YAMAHA FACTOR 125 2009 A 2015.
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_720584-MLB71126116875_082023-F.webp" />
+            <h3>BUCHA BALANÇA YBR/RD DANIDREA </h3>
+            <p>R$ 35,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+    </div>
+</section>
+<section class="section" id="cabos">
+    <h2 class="titulo">CABO ACELERADOR HONDA</h2>
+    <div class="produtos">
+
+    <div class="produto" data-descricao="Cabo acelerador cg 91 a 99
+
+Garantia do vendedor: 30 dias">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR TITAN 99</h3>
+            <p>R$ 25,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="CABO ACELERADOR.
+
+
+
+APLICACAO:
+CG 125 TITAN 2002-08
+BICICLETA MOTORIZA
+MOBILETE CALOI MONARK
+ADAPTAVEL:
+MOBILETE CALOI MONARK
+BICICLETA MOTORIZADA
+Garantia de fábrica: 90 dias">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR TITAN 125 00-08</h3>
+            <p>R$ 25,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="APLICAÇÃO
+Moto Honda CG 150 TITAN ES / KS anos 2004 2005 2006 2007 2008;
+Moto Honda CG 150 TITAN ESD anos 2002 2003 2004 2005 2006 2007 2008;
+Moto Honda 150 TITAN JOB anos anos 2004 2005 2006 2007 2008 2009
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR TITAN 150</h3>
+            <p>R$ 25,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="Aplicação:
+CG 150 TITAN ES / KS: Ano 09/...
+CG 150 TITAN ESD: Ano 09/...
+CG 150 TITAN MIX ES / KS: Ano 09/...
+CG 150 TITAN MIX ESD: Ano 09/...">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR TITAN 150 09-13</h3>
+            <p>R$ 25,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="HONDA
+CG 160 TITAN - 2016 / 2017 / 2018 / 2019 / 2020 / 2021 / 2022 / 2023
+CG 160 FAN - 2016 / 2017 / 2018 / 2019 / 2020 / 2021 / 2022 / 2023
+CG 160 START- 2016 / 2017 / 2018 / 2019 / 2020 / 2021 / 2022 / 2023
+CG 160 CARGO - 2016 / 2017 / 2018 / 2019 / 2020 / 2021 / 2022 / 2023">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR (A) TITAN 160</h3>
+            <p>R$ 25,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="HONDA
+CG 160 TITAN - 2016 / 2017 / 2018 / 2019 / 2020 / 2021 / 2022 / 2023
+CG 160 FAN - 2016 / 2017 / 2018 / 2019 / 2020 / 2021 / 2022 / 2023
+CG 160 START- 2016 / 2017 / 2018 / 2019 / 2020 / 2021 / 2022 / 2023
+CG 160 CARGO - 2016 / 2017 / 2018 / 2019 / 2020 / 2021 / 2022 / 2023">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR (B) TITAN 160</h3>
+            <p>R$ 25,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="Compatível:
+
+HONDA Cbx 250 Twister 2001 até 2008
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR CBX 250 (A) 00-08</h3>
+            <p>R$ 25,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="Compatível:
+
+HONDA Cbx 250 Twister 2001 até 2008
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR CBX 250 (B) 00-08 </h3>
+            <p>R$ 40,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="DESCRIÇÃO:
+- CABO DO ACELERADOR - A
+ATENÇÃO, ESTE CABO É O A DA FOTO 5 DO ANÚNCIO, NA MOTO UTILIZA CABO A + CABO B!
+        APLICAÇÃO:
+        - HONDA XR 250 TORNADO 01/08
+        ">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR XR 250 TORNARDO (A) </h3>
+            <p>R$ 20,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="Cabo Acelerador A Honda Xre 190 2016 Em Diante
+Produto novo;
+Aplicação: Xre 190 2016 Em Diante">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR XRE 190 (A) </h3>
+            <p>R$ 30,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="Cabo Acelerador B Honda Xre 190 2016 Em Diante
+
+Produto novo;
+Aplicação: Xre 190 2016 Em Diante">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR XRE 190 (B) </h3>
+            <p>R$ 00,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR XRE 300 (A) </h3>
+            <p>R$ 35,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR XRE 300 (B)</h3>
+            <p>R$ 35,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR NXR 125 BROS 03-05</h3>
+            <p>R$ 20,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR NXR 150 BROS 05-08 </h3>
+            <p>R$ 25,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR NXR 150 BROS 09-13</h3>
+            <p>R$ 30,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR NXR 160 BROS (A)</h3>
+            <p>R$ 25,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR NXR 160 BROS (B)</h3>
+            <p>R$ 25,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR CB 300 (A) 09-15</h3>
+            <p>R$ 30,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR CB 300 (B) 09-15</h3>
+            <p>R$ 20,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR CRF 230 (A)</h3>
+            <p>R$ 35,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+    </div>
+</section>
+<section class="section" id="cabos">
+    <h2 class="titulo">CABO ACELERADOR MULTIMARCAS</h2>
+
+    <div class="produtos">
+
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR YBR 125 00-02 CHAPA TORTA</h3>
+            <p>R$ 25,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR YBR 125 02-08 CHAPA RETA</h3>
+            <p>R$ 30,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR FACTOR 125 2009</h3>
+            <p>R$ 20,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR XTZ 125 03-08</h3>
+            <p>R$ 30,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR XTZ 125 2009</h3>
+            <p>R$ 25,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR XTZ 150 14-24</h3>
+            <p>R$ 40,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR XTZ 250 LANDER  </h3>
+            <p>R$ 30,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR </h3>
+            <p>R$ 00,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR SUZUKI YES 125</h3>
+            <p>R$ 20,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR SHINERAY JET 50</h3>
+            <p>R$ 20,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO ACELERADOR SHINERAY PHOENIX 50</h3>
+            <p>R$ 25,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+    </div>
+</section>
+<section class="section" id="CABO">
+    <h2 class="titulo">CABO VELOCIMETRO</h2>
+
+    <div class="produtos">
+        <div class="produto" data-descricao="Cabo Velocimetro CBX250 TWISTER 2001 2002 2003 2004 2005 2006 2007 2008">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO VELOCIMETRO CBX 250 01-08</h3>
+            <p>R$ 30,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto" data-descricao="Motos compatíveis:
+TITAN 150 ES/KS/ESD - 2004 A 2008
+Cabo de velocímetro 1° Linha produzido com materiais de alta qualidade e padrões de fabricação exclusivos, garantindo mais durabilidade e eficiência.">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO VELOCIMETRO CG 150 TITAN 04-08 KS/ES/ESD</h3>
+            <p>R$30,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="CABO VELOCIMETRO CG 150 TITAN 2009/2013
+Garantia de fábrica: 90 dias
+
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO VELOCIMETRO CG 150 TITAN 2009/2013</h3>
+            <p>R$30,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="CABO DO VELOCÍMETRO YAMAHA YBR 125 FACTOR 2009 A 2016
+APLICAÇÃO:
+YAMAHA YBR 125 FACTOR 2009 A 2016 (A DISCO)
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO VELOCIMETRO YBR FACTOR 125 2009-2013 A DISCO </h3>
+            <p>R$ 25,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto" data-descricao="Aplicação:
+Yamaha YBR Factor 125 K (Freio a Tambor Dianteiro) – 2009 a 2016
+">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_604803-MLB98635979356_112025-F.webp" />
+            <h3>CABO VELOCIMETRO YBR FACTOR 125 K TAMBOR  </h3>
+            <p>R$25,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+    </div>-
+</section>
+<section class="section" id="ARRANQUE">
+    <h2 class="titulo">MOTOR DE PARTIDA</h2>
+
+    <div class="produtos">
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_930621-MLB95377592640_102025-F.webp" />
+            <h3>MOTOR DE PARTIDA CG TITAN 125 </h3>
+            <p>R$ 250,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_930621-MLB95377592640_102025-F.webp" />
+            <h3>MOTOR DE PARTIDA CG TITAN 150 04-08 </h3>
+            <p>R$ 250,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_930621-MLB95377592640_102025-F.webp" />
+            <h3>MOTOR DE PARTIDA CG TITAN 150 09-13 </h3>
+            <p>R$ 250,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_930621-MLB95377592640_102025-F.webp" />
+            <h3>MOTOR DE PARTIDA CG TITAN 160 </h3>
+            <p>R$ 300,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_930621-MLB95377592640_102025-F.webp" />
+            <h3>MOTOR DE PARTIDA XR 250 TORNARDO</h3>
+            <p>R$ 300,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_930621-MLB95377592640_102025-F.webp" />
+            <h3>MOTOR DE PARTIDA YBR </h3>
+            <p>R$ 270,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_930621-MLB95377592640_102025-F.webp" />
+            <h3>MOTOR DE PARTIDA YES 125</h3>
+            <p>R$ 350,00 </p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div><div class="produto">
+        <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" />
+        <h3>ESCOVA ARRANQUE BIZ 125</h3>
+        <p>R$25,00</p>
+        <button onclick="abrirModal(this)">Ver detalhes</button>
+    </div>
+        <div class="produto">
+            <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" />
+            <h3>ESCOVA ARRANQUE BIZ 100</h3>
+            <p>R$25,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" />
+            <h3>ESCOVA ARRANQUE CG 125</h3>
+            <p>R$50,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" />
+            <h3>ESCOVA ARRANQUE CG 150</h3>
+            <p>R$50,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" />
+            <h3>ESCOVA ARRANQUE CG 160</h3>
+            <p>R$50,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" />
+            <h3>ESCOVA ARRANQUE CRF 230</h3>
+            <p>R$45,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" />
+            <h3>ESCOVA ARRANQUE FAZER 150</h3>
+            <p>R$30,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" />
+            <h3>ESCOVA ARRANQUE FAZER 250</h3>
+            <p>R$70,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" />
+            <h3>ESCOVA ARRANQUE YBR125 / FACTOR 2009</h3>
+            <p>R$30,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://down-br.img.susercontent.com/file/0d661bf746c1ae314aff846f3c5c05f3_tn" />
+            <h3>ESCOVA ARRANQUE SUZUKI YES 125</h3>
+            <p>R$35,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+    </div>
+
+</section>
+<section class="section" id="velas">
+    <h2 class="titulo">VELA IGNIÇÃO </h2>
+
+    <div class="produtos">
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_754520-MLB97972564549_112025-F-vela-de-ignico-ngk-original-titan-150fan-bros-150-cpr8ea9.webp" />
+            <h3>VELA IGNIÇÃO NGK TITAN 125 DP8EA-9 </h3>
+            <p>R$30,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_754520-MLB97972564549_112025-F-vela-de-ignico-ngk-original-titan-150fan-bros-150-cpr8ea9.webp" />
+            <h3>VELA IGNIÇÃO NGK TITAN 150/160/BROS CPR8EA-9 </h3>
+            <p>R$35,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_997929-MLB84196101081_042025-F.webp" />
+            <h3>VELA IGNIÇÃO TITAN 125 SMARTFOX DPR8EA-9  </h3>
+            <p>R$25,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_997929-MLB84196101081_042025-F.webp" />
+            <h3>VELA IGNIÇÃO TITAN 150/160/BROS CPR8EA-9  </h3>
+            <p>R$30,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+        <div class="produto">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_997929-MLB84196101081_042025-F.webp" />
+            <h3>VELA IGNIÇÃO YBR/BIZ/SHINERAY C6HSA  </h3>
+            <p>R$25,00</p>
+            <button onclick="abrirModal(this)">Ver detalhes</button>
+        </div>
+
+
+    </div>
+</section>
+
+
+
+        <a id="whatsapp" href="https://wa.me/5531984264223" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" />
+</a>
+
+<footer id="contato">
+    <p>SAMUELMOTOS © 2025 - Todos os direitos reservados</p>
+    <p>Contato: (31) 98426-4223</p>
+</footer>
+<script>
+    let carrinho = [];
+
+    // Atualiza o contador no ícone
+    function atualizarContador() {
+        document.getElementById("contadorCarrinho").innerText =
+            carrinho.reduce((a,b)=>a + b.quantidade, 0);
+    }
+
+    // Abrir / Fechar carrinho
+    function abrirCarrinho() {
+        const janela = document.getElementById("janelaCarrinho");
+        janela.style.display = janela.style.display === "block" ? "none" : "block";
+    }
+
+    function fecharCarrinho() {
+        document.getElementById("janelaCarrinho").style.display = "none";
+    }
+
+    // Adicionar ao carrinho
+    function adicionarAoCarrinho(botao) {
+        const produto = botao.parentElement;
+        const nome = produto.querySelector("h3").innerText;
+        const precoTexto = produto.querySelector("p").innerText
+            .replace("R$", "")
+            .replace(",", ".")
+            .trim();
+
+        const preco = parseFloat(precoTexto);
+
+        const itemExistente = carrinho.find(item => item.nome === nome);
+
+        if (itemExistente) {
+            itemExistente.quantidade++;
+        } else {
+            carrinho.push({ nome, preco, quantidade: 1 });
+        }
+
+        renderizarCarrinho();
+        atualizarContador();
+    }
+
+    // Remover item
+    function removerItem(index) {
+        carrinho.splice(index, 1);
+        renderizarCarrinho();
+        atualizarContador();
+    }
+
+    // Aumentar / diminuir quantidade
+    function alterarQtd(index, valor) {
+        carrinho[index].quantidade += valor;
+
+        if (carrinho[index].quantidade <= 0) {
+            carrinho.splice(index, 1);
+        }
+
+        renderizarCarrinho();
+        atualizarContador();
+    }
+
+    // Renderizar carrinho na tela
+    function renderizarCarrinho() {
+        let lista = document.getElementById("listaCarrinho");
+        lista.innerHTML = "";
+
+        carrinho.forEach((item, index) => {
+            lista.innerHTML += `
+            <li>
+                <div>
+                    <strong>${item.nome}</strong><br>
+                    R$ ${(item.preco * item.quantidade).toFixed(2)}
+                </div>
+
+                <div>
+                    <button class="btnQtd" onclick="alterarQtd(${index}, -1)">-</button>
+                    ${item.quantidade}
+                    <button class="btnQtd" onclick="alterarQtd(${index}, 1)">+</button>
+                    <button class="btnRemover" onclick="removerItem(${index})">X</button>
+                </div>
+            </li>
+        `;
+        });
+
+        const total = carrinho.reduce((t, item) => t + item.preco * item.quantidade, 0);
+
+        lista.innerHTML += `
+        <li><strong>Total: R$ ${total.toFixed(2)}</strong></li>
+
+        <li>
+            <button onclick="enviarWhats()"
+                style="background:#25d366; color:#fff; padding:10px; width:100%; border:none; border-radius:6px; margin-top:10px;">
+                Finalizar pedido via WhatsApp
+            </button>
+        </li>
+    `;
+    }
+
+    // Enviar pedido para WhatsApp
+    function enviarWhats() {
+        if (carrinho.length === 0)
+            return alert("Seu carrinho está vazio!");
+
+        let mensagem = "Olá! Gostaria de finalizar meu pedido:%0A%0A";
+
+        carrinho.forEach(item => {
+            mensagem += `${item.nome} - Quantidade: ${item.quantidade} - Subtotal: R$ ${(item.preco * item.quantidade).toFixed(2)}%0A`;
+        });
+
+        const total = carrinho.reduce((t, i) => t + i.preco * i.quantidade, 0);
+
+        mensagem += `%0A*Total Geral: R$ ${total.toFixed(2)}*`;
+
+        const numero = "5531984264223"; // Seu WhatsApp
+        window.open(`https://wa.me/${numero}?text=${mensagem}`, "_blank");
+    }
+
+function abrirModal(elemento) {
+    const card = elemento.closest(".produto");
+    const img = card.querySelector("img").src;
+    const titulo = card.querySelector("h3").innerText;
+    const preco = card.querySelector("p").innerText;
+
+    document.getElementById("modalImg").src = img;
+    document.getElementById("modalTitulo").innerText = titulo;
+    document.getElementById("modalPreco").innerText = preco;
+const descricao = card.getAttribute("data-descricao") || "Sem descrição disponível.";
+document.getElementById("modalDescricao").innerText = descricao;
+
+
+    window.produtoSelecionado = card;
+    document.getElementById("modalProduto").style.display = "flex";
+}
+
+function fecharModal() {
+    document.getElementById("modalProduto").style.display = "none";
+}
+
+function adicionarAoCarrinhoModal() {
+    adicionarAoCarrinho(window.produtoSelecionado.querySelector("button"));
+    fecharModal();
+}
+
+</script>
+
+
+<div id="modalProduto">
+    <div class="conteudo">
+        <img id="modalImg" src="">
+        <h2 id="modalTitulo"></h2>
+        <p id="modalPreco"></p>
+         <p id="modalDescricao"></p>
+        <button class="btnCarrinho" onclick="adicionarAoCarrinhoModal()">Adicionar ao Carrinho</button>
+        <button class="btnFechar" onclick="fecharModal()">Fechar</button>
+    </div>
+</div>
+</body>
+</html>
